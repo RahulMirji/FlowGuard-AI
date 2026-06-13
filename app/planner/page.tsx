@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PlannerMap } from "@/components/planner-map";
+import { useWeather } from "@/lib/useWeather";
 import "./planner.css";
 
 interface RankedRoute {
@@ -24,6 +25,7 @@ export default function PlannerPage() {
   const [destination, setDestination] = useState("Whitefield, Bengaluru");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<RankResult | null>(null);
+  const weather = useWeather();
 
   const analyze = async () => {
     if (!origin || !destination) return;
@@ -66,7 +68,7 @@ export default function PlannerPage() {
           <a href="/dashboard"><span className="material-symbols-outlined">dashboard</span> City Dashboard</a>
         </nav>
         <div className="header-right">
-          <div className="live-rain-widget">⛈️ <strong>18.5 mm/h</strong> <span className="live-dot" /> Live Rainfall</div>
+          <div className="live-rain-widget">⛈️ <strong>{weather.current_mm_per_hour} mm/h</strong> <span className="live-dot" /> Live Rainfall</div>
         </div>
       </header>
 
@@ -191,8 +193,8 @@ export default function PlannerPage() {
       {/* BOTTOM BAR */}
       <div className="bottom-bar">
         <div className="status-items-left">
-          <div className="status-block"><div className="status-icon-box">🌧️</div><div className="status-info"><label>Live Rainfall</label><span className="status-value">18.5 mm/h</span></div></div>
-          <div className="status-block"><div className="status-icon-box">⏱️</div><div className="status-info"><label>Next 3 Hours</label><span className="status-value">32 mm</span></div></div>
+          <div className="status-block"><div className="status-icon-box">🌧️</div><div className="status-info"><label>Live Rainfall</label><span className="status-value">{weather.current_mm_per_hour} mm/h</span></div></div>
+          <div className="status-block"><div className="status-icon-box">⏱️</div><div className="status-info"><label>Next 3 Hours</label><span className="status-value">{weather.forecast_3h_mm} mm</span></div></div>
           <div className="status-block"><div className="status-icon-box">🛡️</div><div className="status-info"><label>Severe Zones</label><span className="status-value">2 Active</span></div></div>
           <div className="status-block"><div className="status-icon-box">🔔</div><div className="status-info"><label>Alerts</label><span className="status-value">3 Active</span></div></div>
         </div>
