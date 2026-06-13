@@ -1,463 +1,245 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-
 export default function LandingPage() {
-  const countersRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const counters = countersRef.current?.querySelectorAll<HTMLSpanElement>(".counter");
-    if (!counters) return;
-
-    const animate = (el: HTMLSpanElement) => {
-      const target = parseFloat(el.dataset.target || "0");
-      const dec = parseInt(el.dataset.dec || "0");
-      const steps = 45;
-      const duration = 650;
-      let step = 0;
-      const interval = setInterval(() => {
-        step++;
-        const val = Math.min(target, (target / steps) * step);
-        el.textContent = val.toFixed(dec);
-        if (step >= steps) {
-          el.textContent = target.toFixed(dec);
-          clearInterval(interval);
-        }
-      }, duration / steps);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            animate(e.target as HTMLSpanElement);
-            observer.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    counters.forEach((c) => observer.observe(c));
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className="min-h-screen">
-      {/* ═══ NAV ═══ */}
-      <nav className="fixed top-0 left-0 right-0 z-[200] h-16 flex items-center justify-between px-8 bg-[rgba(10,14,20,0.92)] backdrop-blur-[16px] border-b border-[var(--border)]">
-        <div className="flex items-center gap-2.5">
-          <div className="w-[34px] h-[34px] bg-[var(--signal-amber)] rounded-md flex items-center justify-center text-base shrink-0">
-            🛡
+    <div className="w-full max-w-[1440px] bg-[rgba(248,250,252,0.4)] backdrop-blur-[20px] rounded-3xl border border-[rgba(255,255,255,0.6)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] p-6 flex flex-col gap-5 relative">
+      {/* ═══ HEADER ═══ */}
+      <header className="flex justify-between items-center w-full">
+        <div className="flex items-center gap-3">
+          <div className="w-[42px] h-[42px] rounded-xl bg-gradient-to-br from-[#0284c7] to-[#0369a1] flex items-center justify-center shadow-[0_4px_12px_rgba(2,132,199,0.3)]">
+            <i className="fa-solid fa-droplet text-white text-lg" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-[13px] font-bold tracking-[0.12em] uppercase leading-tight">
-              FlowGuard AI
-            </span>
-            <span className="font-mono text-[9px] tracking-[0.1em] uppercase text-[var(--text-muted)] leading-tight">
+          <div>
+            <h1 className="text-lg font-extrabold tracking-wide uppercase">
+              FLOWGUARD <span className="text-[var(--brand-orange)]">AI</span>
+            </h1>
+            <p className="text-[10px] font-semibold text-[var(--text-muted)] tracking-[1px] uppercase -mt-0.5">
               Bengaluru Flood Intelligence
-            </span>
+            </p>
           </div>
         </div>
 
-        <ul className="hidden md:flex items-center gap-10 list-none">
-          {["Planner", "Assistant", "City Dashboard"].map((link) => (
-            <li key={link}>
-              <a
-                href={`/${link.toLowerCase().replace(" ", "")}`}
-                className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--text-muted)] hover:text-[var(--text)] transition-colors no-underline"
-              >
-                {link}
-              </a>
-            </li>
+        <div className="hidden lg:flex bg-[rgba(255,255,255,0.6)] border border-[rgba(255,255,255,0.7)] rounded-[30px] p-1">
+          {[
+            { icon: "fa-map-location-dot", label: "Planner", active: false },
+            { icon: "fa-user-shield", label: "Assistant", active: true },
+            { icon: "fa-chart-line", label: "City Dashboard", active: false },
+          ].map((n) => (
+            <a
+              key={n.label}
+              href={`/${n.label.toLowerCase().replace(" ", "")}`}
+              className={`px-5 py-2 text-[13px] font-semibold flex items-center gap-2 rounded-[25px] transition-all ${
+                n.active
+                  ? "bg-white text-[var(--text-main)] shadow-[0_4px_10px_rgba(0,0,0,0.03)]"
+                  : "text-[var(--text-muted)] hover:bg-white hover:text-[var(--text-main)]"
+              }`}
+            >
+              <i className={`fa-solid ${n.icon} text-xs`} />
+              {n.label}
+            </a>
           ))}
-        </ul>
+        </div>
 
-        <div className="flex items-center gap-6">
-          <a
-            href="/planner"
-            className="hidden md:flex items-center gap-2 text-xs font-bold tracking-[0.1em] uppercase text-[var(--ink)] bg-[var(--signal-amber)] px-5 py-2.5 rounded no-underline hover:bg-[#ffb060] transition-colors"
-          >
-            Plan a Route →
+        <div className="flex items-center gap-4">
+          <a href="/planner" className="hidden md:flex items-center gap-2.5 bg-gradient-to-br from-[#ff7e47] to-[#ff571a] text-white px-6 py-3 rounded-[30px] text-[13px] font-bold shadow-[0_4px_15px_rgba(255,107,53,0.3)] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(255,107,53,0.4)] transition-all">
+            Plan a Route <i className="fa-solid fa-arrow-right" />
           </a>
-          <div className="flex items-center gap-2 pl-6 border-l border-[var(--border)]">
-            <span className="text-xl opacity-80">🌧</span>
-            <div>
-              <div className="flex items-baseline gap-1">
-                <span className="font-mono text-lg font-semibold text-[var(--text)]">18.5</span>
-                <span className="font-mono text-[11px] text-[var(--text-muted)]">mm/h</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--flood-low)] ml-1" />
-              </div>
-              <div className="font-mono text-[9px] tracking-[0.1em] uppercase text-[var(--text-muted)]">
-                Live Rainfall
+          <div className="flex items-center gap-2.5 bg-white px-3.5 py-1.5 rounded-[30px] shadow-[0_4px_10px_rgba(0,0,0,0.02)] border border-[rgba(255,255,255,0.9)]">
+            <i className="fa-solid fa-cloud-showers-heavy text-[var(--brand-blue)] text-lg" />
+            <div className="text-right">
+              <div className="text-sm font-bold">18.5 <span className="text-[10px] font-semibold">mm/h</span></div>
+              <div className="text-[9px] text-[var(--text-muted)] uppercase font-semibold flex items-center justify-end gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] inline-block" /> Live Rainfall
               </div>
             </div>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* ═══ HERO ═══ */}
-      <section className="pt-16 min-h-screen grid grid-cols-1 lg:grid-cols-[480px_1fr]">
+      {/* ═══ MAIN WORKSPACE ═══ */}
+      <main className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-5 lg:h-[620px]">
         {/* ─── LEFT PANEL ─── */}
-        <div className="flex flex-col justify-center px-8 lg:px-10 py-12 bg-[var(--ink)] relative z-[2]">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-2.5 mb-7">
-            <span className="w-6 h-0.5 bg-[var(--signal-amber)] rounded-sm" />
-            <span className="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-[var(--signal-amber)]">
-              Bengaluru Flood Intelligence · Monsoon 2026
-            </span>
+        <div className="flex flex-col justify-between">
+          <div className="pt-4">
+            <div className="inline-block bg-[rgba(255,107,53,0.1)] text-[var(--brand-orange)] text-[11px] font-bold uppercase px-3 py-1 rounded-[20px] tracking-[0.5px] mb-5 border border-[rgba(255,107,53,0.15)]">
+              <span className="text-[var(--text-muted)] font-medium">•</span> Bengaluru Flood Intelligence <span className="text-[var(--text-muted)] font-medium mx-1">•</span> Monsoon 2026
+            </div>
+            <h2 className="text-[clamp(2.5rem,4vw,3.25rem)] font-extrabold leading-[1.1] tracking-tight text-[#0f172a]">
+              Bengaluru <span className="text-[var(--brand-orange)]">floods.</span>
+              <br />
+              Your commute doesn&apos;t have to.
+            </h2>
+            <p className="mt-5 text-sm leading-relaxed text-[var(--text-muted)] max-w-[90%]">
+              FlowGuard AI tracks live rainfall, scores flood-risk across 15 chronic waterlogging hotspots, and routes you around them —{" "}
+              <span className="text-[var(--brand-orange)] font-semibold">before</span> you hit the jam.
+            </p>
+            <div className="flex gap-3 mt-7">
+              <a href="/planner" className="flex items-center gap-2.5 bg-gradient-to-br from-[#ff7e47] to-[#ff571a] text-white px-7 py-3.5 rounded-[30px] text-[13px] font-bold shadow-[0_4px_15px_rgba(255,107,53,0.3)] hover:-translate-y-px transition-all">
+                <i className="fa-solid fa-arrow-right" /> Plan a Route <i className="fa-solid fa-arrow-right" />
+              </a>
+              <a href="/dashboard" className="flex items-center gap-2.5 bg-[rgba(255,255,255,0.5)] border border-[rgba(255,255,255,0.8)] text-[#1e293b] px-6 py-3.5 rounded-[30px] text-[13px] font-bold backdrop-blur-[5px]">
+                View City Dashboard <i className="fa-solid fa-chart-simple text-[var(--brand-blue)]" />
+              </a>
+            </div>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-[3.5rem] lg:text-[4.2rem] font-black leading-none tracking-tight text-white mb-2 font-serif">
-            Bengaluru{" "}
-            <span className="text-[var(--signal-amber)] italic">floods.</span>
-            <br />
-            <span>Your commute</span>
-            <br />
-            <span>doesn&apos;t have to.</span>
-          </h1>
-
-          {/* Underline */}
-          <div className="w-[60px] h-[3px] bg-[var(--rain-blue)] rounded-sm mt-5 mb-6" />
-
-          {/* Sub */}
-          <p className="text-[14.5px] text-[var(--text-muted)] leading-[1.75] max-w-[380px] mb-9">
-            FlowGuard AI tracks live rainfall, scores flood-risk across 15
-            chronic waterlogging hotspots, and routes you around them —{" "}
-            <strong className="text-[var(--signal-amber)] font-medium">before</strong> you
-            hit the jam.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex gap-3 mb-12">
-            <a
-              href="/planner"
-              className="flex items-center gap-2 text-xs font-bold tracking-[0.08em] uppercase bg-[var(--signal-amber)] text-[var(--ink)] px-6 py-3.5 rounded no-underline hover:bg-[#ffb060] hover:-translate-y-px transition-all"
-            >
-              → Plan a Route
-            </a>
-            <a
-              href="/dashboard"
-              className="flex items-center gap-2 text-xs font-semibold tracking-[0.08em] uppercase text-[var(--text-muted)] border border-[rgba(255,255,255,0.15)] px-5 py-3.5 rounded no-underline hover:text-[var(--text)] hover:border-[rgba(255,255,255,0.3)] transition-all"
-            >
-              View City Dashboard
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <rect x="1" y="7" width="3" height="6" fill="currentColor" opacity="0.7" />
-                <rect x="5.5" y="4" width="3" height="9" fill="currentColor" />
-                <rect x="10" y="1" width="3" height="12" fill="currentColor" opacity="0.7" />
-              </svg>
-            </a>
-          </div>
-
-          {/* KPIs */}
-          <div ref={countersRef} className="flex gap-10 pt-10 border-t border-[var(--border)] mb-10">
-            {[
-              { target: "86.7", dec: "1", unit: "%", trend: "▲ 4.3%", label: "Prediction Accuracy" },
-              { target: "24.3", dec: "1", unit: "%", trend: "▲ 3.1%", label: "Avg. Commute Reduction" },
-              { target: "4", dec: "0", unit: "", trend: "▲ 1", label: "High-Risk Zones Flagged" },
-            ].map((kpi) => (
-              <div key={kpi.label}>
-                <div className="font-mono text-[2.4rem] font-semibold text-white leading-none flex items-baseline gap-px">
-                  <span className="counter" data-target={kpi.target} data-dec={kpi.dec}>
-                    0
-                  </span>
-                  {kpi.unit && <span className="text-[1.1rem] font-normal">{kpi.unit}</span>}
+          <div>
+            {/* KPI Stats */}
+            <div className="grid grid-cols-3 gap-3 mt-8">
+              {[
+                { val: "86.7", unit: "%", trend: "4.3%", label: "Prediction Accuracy" },
+                { val: "24.3", unit: "%", trend: "3.1%", label: "Avg. Commute Reduction" },
+                { val: "4", unit: "", trend: "1", label: "High-Risk Zones Flagged" },
+              ].map((s) => (
+                <div key={s.label} className="bg-[var(--card-bg)] border border-[rgba(255,255,255,0.7)] rounded-2xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.01)]">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-extrabold text-[#0f172a]">{s.val}</span>
+                    {s.unit && <span className="text-xs font-semibold text-[#64748b]">{s.unit}</span>}
+                    <span className="text-[10px] font-bold text-[#22c55e] ml-auto flex items-center gap-0.5">
+                      <i className="fa-solid fa-caret-up" /> {s.trend}
+                    </span>
+                  </div>
+                  <div className="text-[9px] font-bold text-[#64748b] uppercase mt-3 tracking-[0.3px] leading-tight">{s.label}</div>
                 </div>
-                <div className="text-[11px] text-[var(--flood-low)] mt-1 font-mono flex items-center gap-1">
-                  {kpi.trend}
-                </div>
-                <div className="font-mono text-[9.5px] tracking-[0.1em] uppercase text-[var(--text-dim)] mt-1">
-                  {kpi.label}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Powered by */}
-          <div className="flex items-center gap-5 flex-wrap">
-            <span className="text-xs text-[var(--text-dim)]">Powered by</span>
-            <span className="flex items-center gap-1.5 text-[13px] font-semibold text-[#8B8BFF] opacity-80">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#8B8BFF" />
-              </svg>
-              Gemini
-            </span>
-            <span className="flex items-center gap-1.5 text-[13px] font-semibold text-[#4264fb] opacity-80">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" fill="#4264fb" opacity="0.2" stroke="#4264fb" strokeWidth="1.5" />
-                <circle cx="12" cy="12" r="4" fill="#4264fb" />
-              </svg>
-              Mapbox
-            </span>
-            <span className="flex items-center gap-1.5 text-[13px] font-semibold text-[#EB6E4B] opacity-80">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="8" r="4" fill="#EB6E4B" opacity="0.9" />
-                <path d="M4 16 Q8 13 12 15 Q16 17 20 14" stroke="#EB6E4B" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-              </svg>
-              OpenWeather
-            </span>
-            <span className="flex items-center gap-1.5 text-[13px] font-semibold text-[#3ECF8E] opacity-80">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M4 20L13 4V13H20L11 20V11H4Z" fill="#3ECF8E" />
-              </svg>
-              Supabase
-            </span>
+            {/* Powered by */}
+            <div className="flex items-center gap-3.5 mt-5 text-[11px] text-[#64748b] font-medium">
+              <span>Powered by</span>
+              <span className="font-bold text-[#334155]"><i className="fa-solid fa-sparkles text-[#2563eb] mr-1" />Gemini</span>
+              <span className="font-bold text-[#334155]"><i className="fa-solid fa-map text-black mr-1" />mapbox</span>
+              <span className="font-bold text-[#334155]"><i className="fa-solid fa-cloud text-[#ea580c] mr-1" />OpenWeather</span>
+              <span className="font-bold text-[#334155]"><i className="fa-solid fa-bolt text-[#10b981] mr-1" />Supabase</span>
+            </div>
           </div>
         </div>
 
-        {/* ─── RIGHT MAP PANEL ─── */}
-        <div className="relative bg-[var(--ink2)] overflow-hidden hidden lg:block">
-          {/* Map background */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_100%_at_50%_50%,#0d1825_0%,#080c12_100%)]" />
+        {/* ─── MAP SANDBOX ─── */}
+        <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.5)] overflow-hidden shadow-[inset_0_0_40px_rgba(0,0,0,0.02)] bg-[#c9e3f1] bg-[radial-gradient(circle_at_40%_20%,rgba(255,255,255,0.6)_0%,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(14,165,233,0.15)_0%,transparent_60%)] min-h-[500px] lg:min-h-0">
 
-          {/* Road network SVG */}
-          <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 700 800"
-            preserveAspectRatio="xMidYMid slice"
-          >
-            <defs>
-              <radialGradient id="mapGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#1a2d45" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#080c12" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-            <ellipse cx="350" cy="400" rx="320" ry="350" fill="url(#mapGlow)" />
-            {/* Road grid */}
-            <g stroke="rgba(80,120,170,0.25)" strokeWidth="0.6" fill="none">
-              <line x1="0" y1="80" x2="700" y2="100" />
-              <line x1="0" y1="160" x2="700" y2="175" />
-              <line x1="0" y1="240" x2="700" y2="255" />
-              <line x1="0" y1="320" x2="700" y2="330" />
-              <line x1="0" y1="410" x2="700" y2="415" />
-              <line x1="0" y1="510" x2="700" y2="505" />
-              <line x1="0" y1="620" x2="700" y2="610" />
-              <line x1="0" y1="720" x2="700" y2="710" />
-              <line x1="70" y1="0" x2="80" y2="800" />
-              <line x1="160" y1="0" x2="155" y2="800" />
-              <line x1="260" y1="0" x2="255" y2="800" />
-              <line x1="370" y1="0" x2="365" y2="800" />
-              <line x1="470" y1="0" x2="462" y2="800" />
-              <line x1="570" y1="0" x2="565" y2="800" />
-              <line x1="640" y1="0" x2="635" y2="800" />
-              <line x1="0" y1="500" x2="300" y2="100" />
-              <line x1="400" y1="0" x2="700" y2="500" />
-              <line x1="100" y1="800" x2="600" y2="200" />
-              <line x1="0" y1="200" x2="500" y2="800" />
-            </g>
-            {/* Arteries */}
-            <g stroke="rgba(100,150,200,0.35)" strokeWidth="1.2" fill="none">
-              <ellipse cx="350" cy="400" rx="280" ry="310" />
-              <ellipse cx="350" cy="400" rx="170" ry="190" />
-              <line x1="350" y1="0" x2="355" y2="800" />
-              <line x1="0" y1="400" x2="700" y2="400" />
-            </g>
-            {/* Building blocks */}
-            <g fill="rgba(25,40,65,0.5)">
-              {[90, 170, 250, 340, 430, 530].map((y) =>
-                [85, 170, 270, 375, 475].map((x) => (
-                  <rect key={`${x}-${y}`} x={x} y={y} width={x === 85 ? 65 : x === 270 ? 85 : 80} height={y >= 430 ? 65 : 60} rx={1} />
-                ))
-              )}
-            </g>
-            {/* Recommended route (blue) */}
-            <path
-              d="M 155 640 Q 200 580 240 520 Q 270 470 285 420 Q 300 360 320 300 Q 345 240 375 180 Q 400 130 440 100"
-              stroke="rgba(91,143,190,0.9)"
-              strokeWidth="2.5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M 155 640 Q 200 580 240 520 Q 270 470 285 420 Q 300 360 320 300 Q 345 240 375 180 Q 400 130 440 100"
-              stroke="rgba(91,143,190,0.2)"
-              strokeWidth="8"
-              fill="none"
-              strokeLinecap="round"
-            />
-            {/* Avoided route (red dashed) */}
-            <path
-              d="M 155 640 Q 175 610 190 580 Q 220 530 245 495 Q 270 455 268 430"
-              stroke="rgba(226,70,47,0.5)"
-              strokeWidth="1.5"
-              fill="none"
-              strokeDasharray="5,4"
-              strokeLinecap="round"
-            />
-          </svg>
-
-          {/* Zone markers */}
-          {/* Hebbal - High */}
-          <ZoneMarker left="37%" top="22%" level="high" score={68} name="Hebbal" />
-          {/* Koramangala - High */}
-          <ZoneMarker left="22%" top="50%" level="high" score={71} name="Koramangala" />
-          {/* Silk Board - Severe */}
-          <ZoneMarker left="38%" top="65%" level="severe" score={92} name="Silk Board" />
-          {/* Bellandur - Severe */}
-          <ZoneMarker left="50%" top="78%" level="severe" score={88} name="Bellandur" />
-          {/* KR Puram - Medium */}
-          <ZoneMarker left="68%" top="34%" level="medium" score={44} name="KR Puram" />
-          {/* Marathahalli - Medium */}
-          <ZoneMarker left="65%" top="50%" level="medium" score={47} name="Marathahalli" />
-          {/* Sarjapur - Medium */}
-          <ZoneMarker left="72%" top="68%" level="medium" score={51} name="Sarjapur Rd" />
-
-          {/* Live badge */}
-          <div className="absolute top-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 font-mono text-[10px] font-medium tracking-[0.1em] uppercase text-[var(--text-muted)] bg-[rgba(10,14,20,0.75)] border border-[rgba(255,255,255,0.1)] rounded-full px-3.5 py-1.5 backdrop-blur-[8px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--flood-low)]" />
-            Live · Updated 4 min ago
-          </div>
-
-          {/* Conditions card */}
-          <div className="absolute top-5 right-5 z-10 bg-[rgba(12,18,28,0.9)] border border-[rgba(255,255,255,0.1)] rounded-md p-4 backdrop-blur-[12px] min-w-[150px] space-y-2">
-            <CondRow label="Rainfall" value="18.5 mm/h" color="amber" />
-            <CondRow label="3H Forecast" value="32 mm" color="red" />
-            <CondRow label="Severe Zones" value="2" color="red" />
-            <CondRow label="Status" value="Alert" color="amber" />
-          </div>
-
-          {/* Risk legend */}
-          <div className="absolute bottom-6 right-5 z-10 bg-[rgba(12,18,28,0.9)] border border-[rgba(255,255,255,0.1)] rounded-md p-4 backdrop-blur-[12px]">
-            <div className="font-mono text-[9px] font-semibold tracking-[0.12em] uppercase text-[var(--text-muted)] mb-2.5">
-              Risk Level
+          {/* Top bar */}
+          <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+            <div className="flex flex-col gap-2.5 w-[260px]">
+              <div className="bg-[rgba(15,23,42,0.6)] backdrop-blur-[10px] text-white px-3 py-1.5 rounded-[20px] text-[10px] font-bold uppercase tracking-[0.5px] inline-flex items-center gap-1.5 self-start">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] shadow-[0_0_8px_#22c55e]" />
+                Live <span className="opacity-50 mx-1">•</span> Updated 4 min ago
+              </div>
+              <div className="bg-[rgba(255,255,255,0.7)] backdrop-blur-[10px] border border-[rgba(255,255,255,0.6)] rounded-[30px] px-4 py-2.5 flex items-center gap-2.5 shadow-[0_4px_15px_rgba(0,0,0,0.05)]">
+                <i className="fa-solid fa-magnifying-glass text-[var(--text-muted)] text-[13px]" />
+                <input type="text" placeholder="Search location..." className="bg-transparent border-none outline-none text-[13px] font-medium w-full text-[var(--text-main)]" readOnly />
+              </div>
             </div>
+
+            <div className="bg-[rgba(255,255,255,0.85)] backdrop-blur-[15px] rounded-2xl p-4 w-[200px] shadow-[0_10px_25px_rgba(0,0,0,0.05)] border border-[rgba(255,255,255,0.7)]">
+              {[
+                { label: "Rainfall", val: "18.5 mm/h", cls: "text-[var(--brand-blue)]" },
+                { label: "3H Forecast", val: "32 mm", cls: "text-[#1e293b]" },
+                { label: "Severe Zones", val: "2", cls: "text-[var(--risk-severe)]" },
+              ].map((r) => (
+                <div key={r.label} className="flex justify-between items-center mb-3">
+                  <span className="text-[10px] font-bold text-[#64748b] uppercase">{r.label}</span>
+                  <span className={`text-[13px] font-bold ${r.cls}`}>{r.val}</span>
+                </div>
+              ))}
+              <div className="flex justify-between items-center pt-2 border-t border-[rgba(0,0,0,0.05)]">
+                <span className="text-[10px] font-bold text-[#64748b] uppercase">Status</span>
+                <span className="text-[15px] font-extrabold text-[var(--risk-severe)]">Alert</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Legend */}
+          <div className="absolute right-4 top-[190px] z-10 bg-[rgba(255,255,255,0.85)] backdrop-blur-[10px] rounded-[14px] p-3.5 w-[130px] shadow-[0_8px_20px_rgba(0,0,0,0.04)] border border-[rgba(255,255,255,0.7)]">
+            <div className="text-[9px] font-extrabold uppercase text-[#64748b] mb-2 tracking-[0.3px]">Risk Level</div>
             {[
-              { color: "var(--flood-severe)", label: "Severe" },
-              { color: "var(--flood-high)", label: "High" },
-              { color: "var(--flood-medium)", label: "Medium" },
-              { color: "var(--flood-low)", label: "Low" },
+              { color: "var(--risk-severe)", label: "Severe" },
+              { color: "var(--risk-high)", label: "High" },
+              { color: "var(--risk-medium)", label: "Medium" },
+              { color: "var(--risk-low)", label: "Low" },
             ].map((l) => (
-              <div key={l.label} className="flex items-center gap-2 mb-1.5 last:mb-0 text-[11px] font-medium text-[var(--text-muted)]">
-                <span
-                  className="w-[9px] h-[9px] rounded-full shrink-0"
-                  style={{ background: l.color, boxShadow: `0 0 6px ${l.color}` }}
-                />
+              <div key={l.label} className="flex items-center gap-2 text-[11px] font-semibold text-[#334155] mb-1.5 last:mb-0">
+                <span className="w-2 h-2 rounded-full shrink-0" style={{ background: l.color }} />
                 {l.label}
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* ═══ FEATURE STRIP ═══ */}
-      <div className="grid grid-cols-1 md:grid-cols-4 border-t border-[var(--border)] bg-[var(--ink2)]">
+          {/* Zone Nodes */}
+          <MapNode top="120px" left="52%" color="var(--risk-high)" score={68} name="Hebbal" />
+          <MapNode top="180px" left="72%" color="var(--risk-medium)" score={44} name="KR Puram" />
+          <MapNode top="270px" left="38%" color="var(--risk-high)" score={71} name="Koramangala" />
+          <MapNode top="300px" left="65%" color="var(--risk-medium)" score={47} name="Marathahalli" />
+          <MapNode top="340px" left="50%" color="var(--risk-severe)" score={92} name="Silk Board" size="lg" />
+          <MapNode top="460px" left="62%" color="var(--risk-severe)" score={88} name="Bellandur" />
+          <MapNode top="440px" left="80%" color="var(--risk-high)" score={51} name="Sarjapur Rd" />
+
+          {/* City labels */}
+          <span className="absolute top-[60px] right-[80px] text-[11px] font-semibold text-[#475569] opacity-60 uppercase">Yelahanka</span>
+          <span className="absolute top-[230px] left-[46%] text-[11px] font-semibold text-[#475569] opacity-60 uppercase">Indiranagar</span>
+          <span className="absolute top-[430px] left-[28%] text-[11px] font-semibold text-[#475569] opacity-60 uppercase">Jayanagar</span>
+          <span className="absolute bottom-[30px] right-[120px] text-[11px] font-semibold text-[#475569] opacity-60 uppercase">Electronic City</span>
+          <span className="absolute top-[315px] right-[55px] text-[10px] font-bold text-[#0369a1] opacity-40 uppercase -rotate-[5deg]">Bellandur Lake</span>
+
+          {/* Zoom controls */}
+          <div className="absolute bottom-5 right-4 flex flex-col gap-1.5">
+            {["fa-plus", "fa-minus", "fa-location-crosshairs"].map((ic) => (
+              <div key={ic} className="w-9 h-9 bg-white border border-[rgba(0,0,0,0.05)] rounded-lg flex items-center justify-center text-sm text-[var(--text-muted)] shadow-[0_4px_10px_rgba(0,0,0,0.05)] cursor-pointer hover:text-[var(--text-main)]">
+                <i className={`fa-solid ${ic}`} />
+              </div>
+            ))}
+          </div>
+
+          {/* Mapbox attribution */}
+          <div className="absolute bottom-2.5 left-3 text-[10px] text-[rgba(15,23,42,0.5)] flex items-center gap-0.5 font-bold">
+            <i className="fa-solid fa-map-pin" /> mapbox <span className="font-normal opacity-60">© OSM</span>
+          </div>
+        </div>
+      </main>
+
+      {/* ═══ FEATURES ROW ═══ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-2.5">
         {[
-          { icon: "🌧", title: "Live Weather", desc: "Real-time rainfall and forecasts from OpenWeatherMap.", bg: "rgba(61,107,140,0.2)" },
-          { icon: "🛡", title: "AI Risk Engine", desc: "Gemini AI scores flood-risk zones using live data and historical patterns.", bg: "rgba(255,154,60,0.15)" },
-          { icon: "↔", title: "Smart Routes", desc: "AI ranks routes to avoid high-risk zones and save your time.", bg: "rgba(76,175,130,0.15)" },
-          { icon: "🔔", title: "Early Alerts", desc: "Get notified before flooding turns into gridlock.", bg: "rgba(139,91,186,0.15)" },
-        ].map((f, i) => (
-          <div
-            key={f.title}
-            className={`flex gap-4 items-start p-7 hover:bg-[rgba(255,255,255,0.02)] transition-colors ${i < 3 ? "border-r border-[var(--border)]" : ""}`}
-          >
-            <div
-              className="w-[42px] h-[42px] rounded-lg flex items-center justify-center text-xl shrink-0"
-              style={{ background: f.bg }}
-            >
-              {f.icon}
+          { icon: "fa-cloud-sun-rain", bg: "bg-[#e0f2fe]", color: "text-[#0284c7]", title: "Live Weather", desc: "Real-time rainfall and forecasts from OpenWeatherMap." },
+          { icon: "fa-shield-heart", bg: "bg-[#ffeded]", color: "text-[#ff6b35]", title: "AI Risk Engine", desc: "Gemini AI scores flood-risk zones using live data and historical patterns." },
+          { icon: "fa-route", bg: "bg-[#f3e8ff]", color: "text-[#a855f7]", title: "Smart Routes", desc: "AI ranks routes to avoid high-risk zones and save your time." },
+          { icon: "fa-bell", bg: "bg-[#dcfce7]", color: "text-[#22c55e]", title: "Early Alerts", desc: "Get notified before flooding turns into gridlock." },
+        ].map((f) => (
+          <div key={f.title} className="bg-[rgba(255,255,255,0.45)] border border-[rgba(255,255,255,0.6)] rounded-[18px] p-5 flex gap-4 items-start hover:bg-[rgba(255,255,255,0.6)] transition-colors">
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-lg shrink-0 ${f.bg} ${f.color}`}>
+              <i className={`fa-solid ${f.icon}`} />
             </div>
             <div>
-              <div className="font-mono text-[10px] font-semibold tracking-[0.1em] uppercase text-[var(--text-muted)] mb-1">
-                {f.title}
-              </div>
-              <div className="text-[12.5px] text-[var(--text-dim)] leading-relaxed">{f.desc}</div>
+              <h4 className="text-[11px] font-extrabold uppercase text-[#0f172a] tracking-[0.3px] mb-1">{f.title}</h4>
+              <p className="text-xs leading-snug text-[var(--text-muted)]">{f.desc}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* ═══ SCROLL CTA ═══ */}
-      <div className="flex flex-col items-center gap-2 py-5 border-t border-[var(--border)] bg-[var(--ink)]">
-        <span className="text-lg text-[var(--text-dim)] animate-[bounce-arrow_2s_ease-in-out_infinite]">⌄</span>
-        <span className="font-mono text-[9.5px] tracking-[0.15em] uppercase text-[var(--text-dim)]">
-          Scroll to explore
-        </span>
+      {/* ═══ SCROLL INDICATOR ═══ */}
+      <div className="text-center text-[9px] font-bold uppercase text-[#64748b] tracking-[1px] mt-1 flex justify-center items-center gap-1.5">
+        <i className="fa-solid fa-computer-mouse text-[11px]" /> Scroll to explore
       </div>
     </div>
   );
 }
 
-/* ─── Sub-components ─── */
-
-function ZoneMarker({
-  left,
-  top,
-  level,
-  score,
-  name,
-}: {
-  left: string;
-  top: string;
-  level: "severe" | "high" | "medium";
-  score: number;
-  name: string;
-}) {
-  const styles: Record<string, { size: string; bg: string; border: string; shadow: string; animation?: string; fontSize: string; textColor: string }> = {
-    severe: {
-      size: "w-[62px] h-[62px]",
-      bg: "radial-gradient(circle, rgba(226,70,47,0.5) 0%, rgba(226,70,47,0.15) 60%, transparent 100%)",
-      border: "1.5px solid rgba(226,70,47,0.7)",
-      shadow: "0 0 0 12px rgba(226,70,47,0.08), 0 0 0 24px rgba(226,70,47,0.04), 0 0 40px rgba(226,70,47,0.4)",
-      animation: "pulse-severe 2.5s ease-in-out infinite",
-      fontSize: "text-lg",
-      textColor: "text-white",
-    },
-    high: {
-      size: "w-[52px] h-[52px]",
-      bg: "radial-gradient(circle, rgba(255,140,66,0.45) 0%, rgba(255,140,66,0.12) 60%, transparent 100%)",
-      border: "1.5px solid rgba(255,140,66,0.65)",
-      shadow: "0 0 0 10px rgba(255,140,66,0.07), 0 0 30px rgba(255,140,66,0.35)",
-      animation: "pulse-high 3s ease-in-out infinite",
-      fontSize: "text-[15px]",
-      textColor: "text-white",
-    },
-    medium: {
-      size: "w-[44px] h-[44px]",
-      bg: "radial-gradient(circle, rgba(245,200,66,0.35) 0%, rgba(245,200,66,0.08) 60%, transparent 100%)",
-      border: "1.5px solid rgba(245,200,66,0.55)",
-      shadow: "0 0 0 8px rgba(245,200,66,0.05), 0 0 22px rgba(245,200,66,0.25)",
-      fontSize: "text-[13px]",
-      textColor: "text-[#F5C842]",
-    },
-  };
-
-  const s = styles[level];
-
+function MapNode({ top, left, color, score, name, size }: { top: string; left: string; color: string; score: number; name: string; size?: string }) {
+  const dim = size === "lg" ? "w-[52px] h-[52px] text-base" : "w-[44px] h-[44px] text-sm";
   return (
-    <div
-      className="absolute flex flex-col items-center -translate-x-1/2 -translate-y-1/2 z-[5]"
-      style={{ left, top }}
-    >
+    <div className="absolute flex flex-col items-center z-[5] cursor-pointer" style={{ top, left, transform: "translateX(-50%)" }}>
       <div
-        className={`${s.size} rounded-full flex items-center justify-center relative`}
-        style={{
-          background: s.bg,
-          border: s.border,
-          boxShadow: s.shadow,
-          animation: s.animation,
-        }}
+        className={`${dim} rounded-full flex items-center justify-center font-extrabold text-white relative shadow-[0_4px_12px_rgba(0,0,0,0.15)]`}
+        style={{ background: color }}
       >
-        <span className={`font-mono font-semibold ${s.fontSize} ${s.textColor} relative z-[2] leading-none`}>
-          {score}
-        </span>
+        {score}
+        <span
+          className="absolute inset-0 rounded-full opacity-40"
+          style={{ background: color, animation: "pulse-effect 2s infinite ease-in-out" }}
+        />
       </div>
-      <span className="text-[10px] font-medium tracking-[0.04em] uppercase text-[rgba(255,255,255,0.65)] mt-1.5 whitespace-nowrap [text-shadow:0_1px_4px_rgba(0,0,0,0.8)]">
+      <span className={`bg-[rgba(255,255,255,0.9)] px-2 py-0.5 rounded text-[9px] font-extrabold uppercase mt-1 shadow-[0_2px_6px_rgba(0,0,0,0.05)] tracking-[0.2px] ${name === "Silk Board" ? "text-[var(--risk-severe)] font-black" : ""}`}>
         {name}
       </span>
-    </div>
-  );
-}
-
-function CondRow({ label, value, color }: { label: string; value: string; color: "amber" | "red" }) {
-  const colorClass = color === "amber" ? "text-[var(--signal-amber)]" : "text-[var(--flood-severe)]";
-  return (
-    <div className="flex justify-between items-baseline gap-6">
-      <span className="font-mono text-[9px] font-medium tracking-[0.1em] uppercase text-[var(--text-muted)]">
-        {label}
-      </span>
-      <span className={`font-mono text-sm font-semibold ${colorClass}`}>{value}</span>
     </div>
   );
 }
