@@ -20,8 +20,8 @@
 | 1.8 | Create `lib/supabaseClient.ts` | | ✅ |
 | 1.9 | Set up root `app/layout.tsx` with font + basic nav | | ✅ |
 | 1.10 | Get Google Maps API key | | ✅ |
-| 1.11 | Get OpenWeatherMap API key | | ⬜ |
-| 1.12 | Get Gemini API key from Google AI Studio | | ⬜ |
+| 1.11 | Get OpenWeatherMap API key | | ✅ |
+| 1.12 | Get Gemini API key from Google AI Studio | | ✅ |
 | 1.13 | Set Supabase Edge Function secrets (`GEMINI_API_KEY`, `OPENWEATHER_API_KEY`) | | ⬜ |
 | 1.14 | Initialize `supabase/` directory with `supabase init` | | ✅ |
 
