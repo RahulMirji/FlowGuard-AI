@@ -71,17 +71,17 @@
 
 | # | Task | Owner | Status |
 |---|------|-------|--------|
-| 4.1 | Implement Edge Function `rank-routes` (Gemini prompt 5.2) | | ⬜ |
-| 4.2 | Test Edge Function — verify ranked JSON output | | ⬜ |
-| 4.3 | Deploy Edge Function to Supabase | | ⬜ |
-| 4.4 | Create `app/api/rank-routes/route.ts` (proxy) | | ⬜ |
-| 4.5 | Wire ranking response into RouteCards (verdict badges, explanations) | | ⬜ |
+| 4.1 | Implement Edge Function `rank-routes` (Gemini prompt 5.2) | | ✅ |
+| 4.2 | Test Edge Function — verify ranked JSON output | | ✅ |
+| 4.3 | Deploy Edge Function to Supabase | | ✅ |
+| 4.4 | Create `app/api/rank-routes/route.ts` (proxy) | | ✅ |
+| 4.5 | Wire ranking response into RouteCards (verdict badges, explanations) | | ✅ |
 | 4.6 | Highlight recommended route on map (solid blue vs dashed grey) | | ⬜ |
-| 4.7 | Add "Why this route?" expandable explanation panel | | ⬜ |
-| 4.8 | Log route query to `route_queries` table for KPI tracking | | ⬜ |
-| 4.9 | Verify: Full planner flow — input → routes → AI ranking → display | | ⬜ |
+| 4.7 | Add "Why this route?" expandable explanation panel | | ✅ |
+| 4.8 | Log route query to `route_queries` table for KPI tracking | | ✅ |
+| 4.9 | Verify: Full planner flow — input → routes → AI ranking → display | | ✅ |
 
-**Phase 4 exit criteria:** Complete Route Planner flow works end-to-end with Gemini explanations.
+**Phase 4 exit criteria:** ✅ Complete Route Planner flow works end-to-end with Gemini explanations.
 
 ---
 
