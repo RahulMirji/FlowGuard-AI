@@ -10,15 +10,15 @@
 
 | # | Task | Owner | Status |
 |---|------|-------|--------|
-| 1.1 | Create Next.js project with TypeScript + Tailwind + App Router | | ⬜ |
-| 1.2 | Install dependencies: `@supabase/supabase-js`, `mapbox-gl`, `recharts` | | ⬜ |
+| 1.1 | Create Next.js project with TypeScript + Tailwind + App Router | | ✅ |
+| 1.2 | Install dependencies: `@supabase/supabase-js`, `mapbox-gl`, `recharts` | | ✅ |
 | 1.3 | Create Supabase project, get URL + anon key | | ⬜ |
 | 1.4 | Set up `.env.local` with Supabase + Mapbox tokens | | ⬜ |
 | 1.5 | Create DB tables via Supabase SQL editor (DDL from schema.md) | | ⬜ |
 | 1.6 | Seed `flood_zones` table with 15 Bengaluru hotspots | | ⬜ |
 | 1.7 | Create `lib/types.ts` with all shared interfaces | | ⬜ |
 | 1.8 | Create `lib/supabaseClient.ts` | | ⬜ |
-| 1.9 | Set up root `app/layout.tsx` with font + basic nav | | ⬜ |
+| 1.9 | Set up root `app/layout.tsx` with font + basic nav | | ✅ |
 | 1.10 | Get Mapbox account + public token | | ⬜ |
 | 1.11 | Get OpenWeatherMap API key | | ⬜ |
 | 1.12 | Get Gemini API key from Google AI Studio | | ⬜ |
@@ -39,9 +39,9 @@
 | 2.4 | Create `app/api/risk-zones/route.ts` (proxy) | | ⬜ |
 | 2.5 | Implement Edge Function `calc-kpis` (DB aggregation) | | ⬜ |
 | 2.6 | Create `app/api/kpis/route.ts` (proxy) | | ⬜ |
-| 2.7 | Build `components/KpiCard.tsx` | | ⬜ |
-| 2.8 | Build Landing page (`app/page.tsx`) — hero, KPI cards, CTAs | | ⬜ |
-| 2.9 | Style Landing page with Tailwind (responsive) | | ⬜ |
+| 2.7 | Build `components/KpiCard.tsx` | | ✅ |
+| 2.8 | Build Landing page (`app/page.tsx`) — hero, KPI cards, CTAs | | ✅ |
+| 2.9 | Style Landing page with Tailwind (responsive) | | ✅ |
 | 2.10 | Verify: Landing page fetches and displays live KPI data | | ⬜ |
 
 **Phase 2 exit criteria:** Landing page renders with live KPI cards, risk-zones API returns valid Gemini output.
@@ -53,8 +53,8 @@
 | # | Task | Owner | Status |
 |---|------|-------|--------|
 | 3.1 | Create `lib/mapbox.ts` (config constants, layer definitions) | | ⬜ |
-| 3.2 | Build `components/Map.tsx` — Mapbox GL with 3D buildings, dark theme | | ⬜ |
-| 3.3 | Add risk zone overlay layer (circles color-coded by risk_level) | | ⬜ |
+| 3.2 | Build `components/Map.tsx` — Mapbox GL with 3D buildings, dark theme | | ✅ |
+| 3.3 | Add risk zone overlay layer (circles color-coded by risk_level) | | ✅ |
 | 3.4 | Build source/destination input form with geocoding | | ⬜ |
 | 3.5 | Integrate Mapbox Directions API — fetch 2-3 route alternatives | | ⬜ |
 | 3.6 | Render route polylines on map (solid blue + dashed grey) | | ⬜ |
