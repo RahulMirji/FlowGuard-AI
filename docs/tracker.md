@@ -12,20 +12,20 @@
 |---|------|-------|--------|
 | 1.1 | Create Next.js project with TypeScript + Tailwind + App Router | | ✅ |
 | 1.2 | Install dependencies: `@supabase/supabase-js`, `mapbox-gl`, `recharts` | | ✅ |
-| 1.3 | Create Supabase project, get URL + anon key | | ⬜ |
-| 1.4 | Set up `.env.local` with Supabase + Mapbox tokens | | ⬜ |
-| 1.5 | Create DB tables via Supabase SQL editor (DDL from schema.md) | | ⬜ |
-| 1.6 | Seed `flood_zones` table with 15 Bengaluru hotspots | | ⬜ |
-| 1.7 | Create `lib/types.ts` with all shared interfaces | | ⬜ |
-| 1.8 | Create `lib/supabaseClient.ts` | | ⬜ |
+| 1.3 | Create Supabase project, get URL + anon key | | ✅ |
+| 1.4 | Set up `.env.local` with Supabase + Google Maps tokens | | ✅ |
+| 1.5 | Create DB tables via Supabase SQL editor (DDL from schema.md) | | ✅ |
+| 1.6 | Seed `flood_zones` table with 15 Bengaluru hotspots | | ✅ |
+| 1.7 | Create `lib/types.ts` with all shared interfaces | | ✅ |
+| 1.8 | Create `lib/supabaseClient.ts` | | ✅ |
 | 1.9 | Set up root `app/layout.tsx` with font + basic nav | | ✅ |
-| 1.10 | Get Mapbox account + public token | | ⬜ |
+| 1.10 | Get Google Maps API key | | ✅ |
 | 1.11 | Get OpenWeatherMap API key | | ⬜ |
 | 1.12 | Get Gemini API key from Google AI Studio | | ⬜ |
 | 1.13 | Set Supabase Edge Function secrets (`GEMINI_API_KEY`, `OPENWEATHER_API_KEY`) | | ⬜ |
-| 1.14 | Initialize `supabase/` directory with `supabase init` | | ⬜ |
+| 1.14 | Initialize `supabase/` directory with `supabase init` | | ✅ |
 
-**Phase 1 exit criteria:** `pnpm dev` runs, Supabase connected, seed data queryable.
+**Phase 1 exit criteria:** ✅ `pnpm dev` runs, Supabase connected, seed data queryable.
 
 ---
 
