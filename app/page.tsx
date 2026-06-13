@@ -1,4 +1,5 @@
 import "./landing.css";
+import { MapPanel } from "@/components/map-panel";
 
 export default function LandingPage() {
   return (
@@ -56,6 +57,12 @@ export default function LandingPage() {
 
         {/* MAP */}
         <div className="map-sandbox">
+          {/* Real Google Map layer */}
+          <div className="map-real-layer">
+            <MapPanel />
+          </div>
+
+          {/* Floating UI overlays */}
           <div className="map-top-bar">
             <div className="search-and-status">
               <div className="map-live-status">
@@ -82,26 +89,9 @@ export default function LandingPage() {
             <div className="legend-row"><div className="legend-dot" style={{ background: "var(--risk-low)" }} /> Low</div>
           </div>
 
-          <div className="map-node node-hebbal"><div className="node-pulse">68</div><div className="node-label">Hebbal</div></div>
-          <div className="map-node node-krpuram"><div className="node-pulse">44</div><div className="node-label">KR Puram</div></div>
-          <div className="map-node node-koramangala"><div className="node-pulse">71</div><div className="node-label">Koramangala</div></div>
-          <div className="map-node node-marathahalli"><div className="node-pulse">47</div><div className="node-label">Marathahalli</div></div>
-          <div className="map-node node-silkboard"><div className="node-pulse">92</div><div className="node-label" style={{ fontWeight: 900, color: "var(--risk-severe)" }}>Silk Board</div></div>
-          <div className="map-node node-bellandur"><div className="node-pulse">88</div><div className="node-label">Bellandur</div></div>
-          <div className="map-node node-sarjapur"><div className="node-pulse">51</div><div className="node-label">Sarjapur Rd</div></div>
-
-          <div className="map-landmark lake-bellandur">Bellandur Lake</div>
-          <div className="city-label lbl-yelahanka">Yelahanka</div>
-          <div className="city-label lbl-indiranagar">Indiranagar</div>
-          <div className="city-label lbl-jayanagar">Jayanagar</div>
-          <div className="city-label lbl-ecity">Electronic City</div>
-
-          <div className="map-hud-controls">
-            <div className="hud-btn"><i className="fa-solid fa-plus" /></div>
-            <div className="hud-btn"><i className="fa-solid fa-minus" /></div>
-            <div className="hud-btn"><i className="fa-solid fa-location-crosshairs" /></div>
+          <div className="mapbox-attribution">
+            <i className="fa-solid fa-location-dot" /> Google Maps 3D
           </div>
-          <div className="mapbox-attribution"><i className="fa-solid fa-map-pin" /> mapbox <span style={{ fontWeight: 400, opacity: 0.6 }}>© OSM</span></div>
         </div>
       </section>
 
