@@ -89,13 +89,13 @@
 
 | # | Task | Owner | Status |
 |---|------|-------|--------|
-| 5.1 | Implement Edge Function `chat-assistant` (Gemini prompt 5.3) | | ⬜ |
-| 5.2 | Implement context injection (current weather + risk zones into system prompt) | | ⬜ |
+| 5.1 | Implement Edge Function `chat-assistant` (Gemini prompt 5.3) | | ✅ |
+| 5.2 | Implement context injection (current weather + risk zones into system prompt) | | ✅ |
 | 5.3 | Test conversational responses for sample queries | | ⬜ |
-| 5.4 | Deploy Edge Function | | ⬜ |
-| 5.5 | Create `app/api/chat/route.ts` (streaming proxy) | | ⬜ |
-| 5.6 | Build `components/ChatPanel.tsx` — message list, input, typing indicator | | ⬜ |
-| 5.7 | Build `app/assistant/page.tsx` — full chat page | | ⬜ |
+| 5.4 | Deploy Edge Function | | ✅ |
+| 5.5 | Create `app/api/chat/route.ts` (streaming proxy) | | ✅ |
+| 5.6 | Build `components/ChatPanel.tsx` — message list, input, typing indicator | | ✅ |
+| 5.7 | Build `app/assistant/page.tsx` — full chat page | | ✅ |
 | 5.8 | Verify: Ask "Is Silk Board safe?" → get contextual response | | ⬜ |
 
 **Phase 5 exit criteria:** Chat responds with accurate, contextual flood-safety information.
