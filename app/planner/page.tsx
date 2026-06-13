@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PlannerMap } from "@/components/planner-map";
+import "./planner.css";
 
 interface RankedRoute {
   route_id: string;
