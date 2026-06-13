@@ -62,19 +62,10 @@ header {
 .logo-text p { font-size: 10px; font-weight: 600; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-top: -2px; }
 
 .nav-center {
-  display: flex; background: rgba(255,255,255,0.6);
-  border: 1px solid rgba(255,255,255,0.7); border-radius: 30px; padding: 4px;
+  display: flex;
+  align-items: center;
 }
-.nav-item {
-  padding: 8px 20px; font-size: 13px; font-weight: 600;
-  color: var(--text-muted); text-decoration: none;
-  display: flex; align-items: center; gap: 8px;
-  border-radius: 25px; transition: all 0.2s ease;
-}
-.nav-item.active, .nav-item:hover {
-  background: white; color: var(--text-main);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-}
+.nav-item { display: none; }
 
 .header-actions { display: flex; align-items: center; gap: 16px; }
 .btn-orange {

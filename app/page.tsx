@@ -1,4 +1,5 @@
 import "./landing.css";
+import { NavMenu } from "@/components/nav-menu";
 
 export default function LandingPage() {
   return (
@@ -16,9 +17,7 @@ export default function LandingPage() {
         </div>
 
         <div className="nav-center">
-          <a href="/planner" className="nav-item"><i className="fa-solid fa-map-location-dot" /> Planner</a>
-          <a href="/assistant" className="nav-item active"><i className="fa-solid fa-user-shield" /> Assistant</a>
-          <a href="/dashboard" className="nav-item"><i className="fa-solid fa-chart-line" /> City Dashboard</a>
+          <NavMenu />
         </div>
 
         <div className="header-actions">
