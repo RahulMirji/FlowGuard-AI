@@ -87,6 +87,9 @@ function PlannerContent() {
   const pendingResultRef = useRef<RankResult | null>(null);
   const weather = useWeather();
 
+  const severeZonesCount = zones.filter(z => z.level === "severe").length;
+  const alertsCount = zones.filter(z => z.level === "severe" || z.level === "high").length;
+
   const [originSuggestions, setOriginSuggestions] = useState<string[]>([]);
   const [destSuggestions, setDestSuggestions] = useState<string[]>([]);
   const [autocompleteService, setAutocompleteService] = useState<any>(null);
@@ -535,12 +538,8 @@ function PlannerContent() {
         <div className="status-items-left">
           <div className="status-block"><div className="status-icon-box">🌧️</div><div className="status-info"><label>Live Rainfall</label><span className="status-value">{weather.current_mm_per_hour} mm/h</span></div></div>
           <div className="status-block"><div className="status-icon-box">⏱️</div><div className="status-info"><label>Next 3 Hours</label><span className="status-value">{weather.forecast_3h_mm} mm</span></div></div>
-          <div className="status-block"><div className="status-icon-box">🛡️</div><div className="status-info"><label>Severe Zones</label><span className="status-value">2 Active</span></div></div>
-          <div className="status-block"><div className="status-icon-box">🔔</div><div className="status-info"><label>Alerts</label><span className="status-value">3 Active</span></div></div>
-        </div>
-        <div className="alert-toast-banner">
-          <span>🔊 Stay updated: Enable notifications for real-time alerts</span>
-          <button className="btn-alert-action">🔔 Enable Alerts</button>
+          <div className="status-block"><div className="status-icon-box">🛡️</div><div className="status-info"><label>Severe Zones</label><span className="status-value">{severeZonesCount} Active</span></div></div>
+          <div className="status-block"><div className="status-icon-box">🔔</div><div className="status-info"><label>Alerts</label><span className="status-value">{alertsCount} Active</span></div></div>
         </div>
       </div>
 
