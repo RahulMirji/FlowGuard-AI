@@ -120,3 +120,17 @@
   .status-items-left { flex-wrap: wrap; gap: 16px; }
   .planner-nav nav { display: none; }
 }
+
+/* ANALYSIS PLAN */
+.analysis-plan-wrapper {
+  display: flex; flex-direction: column; gap: 0;
+}
+.analysis-plan-header {
+  font-size: 13px; font-weight: 700; color: #0066ff;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px; background: #eff6ff; border: 1px solid #bfdbfe;
+  border-radius: 12px 12px 0 0;
+}
+.analysis-plan-wrapper > div:last-child {
+  border-radius: 0 0 12px 12px;
+}
