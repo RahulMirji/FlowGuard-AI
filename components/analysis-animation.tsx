@@ -10,19 +10,19 @@ interface Step {
 }
 
 const steps: Step[] = [
-  { icon: "fa-cloud-rain", title: "Weather Intelligence", desc: "Monitoring rainfall forecasts, storm activity, and environmental conditions.", detail: "Rainfall at 18.5mm/h · storm alert active · 32mm forecast next 3h" },
-  { icon: "fa-route", title: "Traffic & Route Intelligence", desc: "Evaluating traffic patterns, route availability, and road accessibility.", detail: "3 route alternatives scanned · Silk Board showing 2.5x congestion" },
-  { icon: "fa-database", title: "Infrastructure Assessment", desc: "Analyzing drainage systems, pumping stations, and water management infrastructure.", detail: "15 pump stations checked · Silk Board drain capacity exceeded" },
-  { icon: "fa-clock-rotate-left", title: "Historical Flood Analysis", desc: "Reviewing historical flood records and identifying high-risk zones.", detail: "15 years cross-referenced · 8 high-risk zones identified on routes" },
-  { icon: "fa-microchip", title: "Risk Prediction Engine", desc: "Predicting flood impact, waterlogging probability, and route safety scores.", detail: "Risk model confidence 94.6% · 5 zones exceed flood threshold" },
-  { icon: "fa-map-location-dot", title: "Smart Route Recommendation", desc: "Delivering the safest route, backup alternatives, and actionable guidance.", detail: "Primary route locked · 2 backup options ready · avoiding 3 severe zones" },
+  { icon: "fa-cloud-rain", title: "Collecting Weather Data", desc: "Collecting rain probability and wind speed data from live weather services to assess current conditions along your route.", detail: "Rain probability 82% · wind speed 24 km/h · 32mm rainfall forecast next 3h" },
+  { icon: "fa-route", title: "Collecting Traffic Data", desc: "Collecting the shortest route, looking for multiple route alternatives, and determining the safest path based on live traffic conditions.", detail: "3 routes found · shortest via ORR · safest via Bannerghatta avoids 2 flood zones" },
+  { icon: "fa-database", title: "Looking at Drainage System Plan", desc: "Collecting the number of drainage pipelines deployed, checking pump station status, and reviewing cleaned drainage records in your route area.", detail: "15 pipelines checked · 8 pumps active · 3 drains recently cleared" },
+  { icon: "fa-clock-rotate-left", title: "Looking at Historical Flood Data", desc: "Reviewing past flood records and waterlogging incidents to identify recurring risk zones along your selected routes.", detail: "15 years cross-referenced · 8 high-risk zones identified on routes" },
+  { icon: "fa-shield-halved", title: "Preparing Recommended Actions", desc: "Ranking all routes by safety score, generating flood-risk alerts, and preparing the safest route recommendation for your journey.", detail: "Safest route locked · 2 backup options ready · avoiding 3 severe zones" },
 ];
 
 interface AnalysisAnimationProps {
   onComplete?: () => void;
+  pendingResult?: any;
 }
 
-export function AnalysisAnimation({ onComplete }: AnalysisAnimationProps) {
+export function AnalysisAnimation({ onComplete, pendingResult }: AnalysisAnimationProps) {
   const [currentStep, setCurrentStep] = useState(-1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [showTyping, setShowTyping] = useState(true);
@@ -37,9 +37,19 @@ export function AnalysisAnimation({ onComplete }: AnalysisAnimationProps) {
   }, []);
 
   useEffect(() => {
-    if (feedRef.current) {
-      feedRef.current.scrollTop = feedRef.current.scrollHeight;
-    }
+    const containers = [
+      document.querySelector(".right-panel"),
+      document.querySelector(".panel-results-area"),
+      document.querySelector(".planner-modal-grid")
+    ];
+    containers.forEach((c) => {
+      if (c) {
+        c.scrollTo({
+          top: c.scrollHeight,
+          behavior: "smooth"
+        });
+      }
+    });
   }, [currentStep, completedSteps, showTyping, done]);
 
   const runStep = (i: number) => {
@@ -66,13 +76,52 @@ export function AnalysisAnimation({ onComplete }: AnalysisAnimationProps) {
       // Animate step progress
       setTimeout(() => setStepProgress(100), 50);
 
-      // Complete step after delay
+      // Complete step after delay (1400ms progress + 200ms gap = 2s total per step)
       setTimeout(() => {
         setCompletedSteps((prev) => [...prev, i]);
         setProgress(Math.round(((i + 1) / steps.length) * 100));
-        setTimeout(() => runStep(i + 1), 350);
-      }, 1300);
-    }, 600);
+        setTimeout(() => runStep(i + 1), 200);
+      }, 1400);
+    }, 400);
+  };
+
+  const getStepDetail = (step: Step, index: number) => {
+    if (!pendingResult || !pendingResult.meta) return step.detail;
+    const { weather, traffic, drainage, historical } = pendingResult.meta;
+
+    switch (index) {
+      case 0:
+        if (weather) {
+          return `Current: ${weather.description} (${weather.current_mm_per_hour} mm/h) · Wind: ${weather.wind_speed} km/h · Forecast: ${weather.forecast_3h_mm} mm in next 3h`;
+        }
+        break;
+      case 1:
+        if (traffic && pendingResult.routes) {
+          const shortestLabel = traffic.shortest_route_id === "route_a" ? "A" : traffic.shortest_route_id === "route_b" ? "B" : "C";
+          const safestLabel = traffic.safest_route_id === "route_a" ? "A" : traffic.safest_route_id === "route_b" ? "B" : "C";
+          return `${traffic.routes_count} routes found · shortest is Route ${shortestLabel} (${traffic.shortest_duration} min) · safest is Route ${safestLabel}`;
+        }
+        break;
+      case 2:
+        if (drainage) {
+          return `${drainage.pipelines_checked} pipelines checked · ${drainage.pumps_active} pumps active · ${drainage.drains_cleared} drains recently cleared`;
+        }
+        break;
+      case 3:
+        if (historical) {
+          return `15 years cross-referenced · ${historical.hotspots_count} hotspots on routes (${historical.total_incidents} seasonal incidents)`;
+        }
+        break;
+      case 4:
+        if (pendingResult.routes) {
+          const safestLabel = pendingResult.recommended_route_id === "route_a" ? "A" : pendingResult.recommended_route_id === "route_b" ? "B" : "C";
+          const alternativesCount = pendingResult.routes.length - 1;
+          const avoidCount = pendingResult.routes.filter((r: any) => r.verdict === "Avoid").length;
+          return `Safest route locked: Route ${safestLabel} · ${alternativesCount} backup option${alternativesCount !== 1 ? "s" : ""} ready · avoiding ${avoidCount} severe zones`;
+        }
+        break;
+    }
+    return step.detail;
   };
 
   return (
@@ -126,7 +175,7 @@ export function AnalysisAnimation({ onComplete }: AnalysisAnimationProps) {
                   style={{ width: isCurrent ? `${stepProgress}%` : isComplete ? "100%" : "0%" }}
                 />
               </div>
-              {isComplete && <p className="aa-step-detail">{step.detail}</p>}
+              {isComplete && <p className="aa-step-detail">{getStepDetail(step, i)}</p>}
             </div>
           );
         })}
@@ -151,15 +200,15 @@ export function AnalysisAnimation({ onComplete }: AnalysisAnimationProps) {
             <div className="aa-summary-grid">
               <div className="aa-summary-stat">
                 <span className="aa-ss-label">Confidence</span>
-                <span className="aa-ss-val">94.6%</span>
+                <span className="aa-ss-val">{pendingResult?.meta?.confidence || "94.6%"}</span>
               </div>
               <div className="aa-summary-stat">
                 <span className="aa-ss-label">Zones checked</span>
-                <span className="aa-ss-val">15</span>
+                <span className="aa-ss-val">{pendingResult?.meta?.drainage?.pipelines_checked || "15"}</span>
               </div>
               <div className="aa-summary-stat">
                 <span className="aa-ss-label">Routes ranked</span>
-                <span className="aa-ss-val">3</span>
+                <span className="aa-ss-val">{pendingResult?.meta?.traffic?.routes_count || "3"}</span>
               </div>
             </div>
           </div>

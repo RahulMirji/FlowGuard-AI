@@ -52,7 +52,7 @@ CREATE INDEX IF NOT EXISTS idx_risk_snapshots_zone ON risk_snapshots(zone_id, ge
 CREATE INDEX IF NOT EXISTS idx_risk_snapshots_latest ON risk_snapshots(generated_at DESC);
 CREATE INDEX IF NOT EXISTS idx_infra_reports_zone ON infra_reports(zone_id, generated_at DESC);
 
--- Seed flood_zones with 15 Bengaluru hotspots
+-- Seed flood_zones with 20 Bengaluru hotspots
 INSERT INTO flood_zones (zone_id, zone_name, lat, lng, ward_number, historical_incidents_per_season, drainage_notes, ground_truth_risk_level) VALUES
 ('silk_board', 'Silk Board Junction', 12.9172, 77.6227, 'W-191', 8, 'Known underpass drainage failure, single outflow pipe for 4-lane underpass', 'Severe'),
 ('bellandur', 'Bellandur Lake Area', 12.9260, 77.6762, 'W-150', 7, 'Lake overflow during heavy rain, blocked raja kaluve (stormwater drain)', 'Severe'),
@@ -68,5 +68,11 @@ INSERT INTO flood_zones (zone_id, zone_name, lat, lng, ward_number, historical_i
 ('yeshwanthpur', 'Yeshwanthpur Circle', 13.0220, 77.5510, 'W-20', 3, 'Older drainage, seasonal blockage from construction debris', 'Medium'),
 ('hsr_layout', 'HSR Layout (Agara Junction)', 12.9116, 77.6389, 'W-174', 4, 'Agara lake overflow path crosses road, SWD undersized', 'High'),
 ('orr_bellandur', 'Outer Ring Road (Bellandur stretch)', 12.9340, 77.6780, 'W-150', 6, 'ORR median drains overflow onto service road, chronic issue', 'Severe'),
-('orr_marathahalli', 'Outer Ring Road (Marathahalli stretch)', 12.9560, 77.7000, 'W-84', 4, 'Similar to Bellandur stretch, slightly better drainage', 'Medium')
+('orr_marathahalli', 'Outer Ring Road (Marathahalli stretch)', 12.9560, 77.7000, 'W-84', 4, 'Similar to Bellandur stretch, slightly better drainage', 'Medium'),
+-- New zones added from BBMP flood reports and news sources
+('goraguntepalya', 'Goraguntepalya Junction', 13.0285, 77.5350, 'W-17', 5, 'Severe waterlogging under flyover, stormwater drain inlets blocked by debris', 'High'),
+('dairy_circle', 'Dairy Circle Underpass', 12.9416, 77.5972, 'W-143', 6, 'Low-lying underpass collects runoff, drainage pump capacity is insufficient', 'High'),
+('kadubeesanahalli', 'Kadubeesanahalli Underpass', 12.9365, 77.6905, 'W-150', 7, 'Major bottleneck on ORR, service road underpass submerged up to 3 feet during heavy rain', 'Severe'),
+('varthur_road', 'Varthur Lake Road', 12.9422, 77.7280, 'W-149', 4, 'Low elevation road near lake runoff channel, floods when lake level rises', 'High'),
+('panathur_rub', 'Panathur Railway Underbridge', 12.9342, 77.7042, 'W-85', 8, 'Chronically flooded low-lying underbridge, storm drains lack proper gravity outfall', 'Severe')
 ON CONFLICT (zone_id) DO NOTHING;
