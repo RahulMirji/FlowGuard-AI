@@ -4,7 +4,16 @@ import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 const BENGALURU_CENTER = { lat: 12.9516, lng: 77.6474 };
 
-const zones = [
+export interface MapZone {
+  id: string;
+  name: string;
+  score: number;
+  level: string;
+  lat: number;
+  lng: number;
+}
+
+const defaultZones: MapZone[] = [
   { id: "hebbal", name: "Hebbal", score: 68, level: "high", lat: 13.0358, lng: 77.5970 },
   { id: "krpuram", name: "KR Puram", score: 44, level: "medium", lat: 13.0012, lng: 77.6868 },
   { id: "koramangala", name: "Koramangala", score: 71, level: "high", lat: 12.9352, lng: 77.6245 },
@@ -21,8 +30,9 @@ const riskColors: Record<string, string> = {
   low: "#22c55e",
 };
 
-export function MapPanel() {
+export function MapPanel({ zones: zonesProp }: { zones?: MapZone[] } = {}) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const zones = zonesProp && zonesProp.length > 0 ? zonesProp : defaultZones;
 
   if (!apiKey) {
     return <MapFallback />;
