@@ -1,177 +1,118 @@
-import "./landing.css";
+"use client";
+
+import { useWeather } from "@/lib/useWeather";
 import { MapPanel } from "@/components/map-panel";
+import "./landing.css";
 
 export default function LandingPage() {
+  const weather = useWeather();
+  const now = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+
   return (
-    <div className="dashboard-container">
-      {/* ═══ HEADER ═══ */}
-      <header>
-        <div className="logo-area">
-          <div className="logo-icon">
-            <i className="fa-solid fa-shield-halved" />
+    <>
+      {/* ── HEADER ── */}
+      <header className="land-header">
+        <a href="/" className="land-logo">
+          <div className="land-logo-icon"><i className="fa-solid fa-shield-halved" /></div>
+          <div>
+            <div className="land-logo-name">FLOWGUARD AI</div>
+            <div className="land-logo-sub">Bengaluru Flood Intelligence</div>
           </div>
-          <div className="logo-text">
-            <h1>FlowGuard <span>AI</span></h1>
-            <p>Bengaluru Flood Intelligence</p>
-          </div>
-        </div>
+        </a>
 
-        <div className="nav-center">
-          <a href="/planner" className="nav-item"><i className="fa-solid fa-map-location-dot" /> Planner</a>
-          <a href="/assistant" className="nav-item active"><i className="fa-solid fa-user-shield" /> Assistant</a>
-          <a href="/dashboard" className="nav-item"><i className="fa-solid fa-chart-line" /> City Dashboard</a>
-        </div>
+        <nav className="land-nav">
+          <a href="/planner">Planner</a>
+          <a href="/assistant">Assistant</a>
+          <a href="/dashboard">City Dashboard</a>
+          <a href="/planner" style={{ color: "#0284c7" }}>Alerts</a>
+        </nav>
 
-        <div className="header-actions">
-          <a href="/planner" className="btn-orange">Plan a Route <i className="fa-solid fa-arrow-right" /></a>
-          <div className="live-rainfall-widget">
-            <i className="fa-solid fa-cloud-showers-heavy" style={{ color: "#0284c7", fontSize: "18px" }} />
-            <div className="weather-info">
-              <div className="val">18.5 <span style={{ fontSize: "10px", fontWeight: 600 }}>mm/h</span></div>
-              <div className="label"><span className="dot-live" /> Live Rainfall</div>
-            </div>
-          </div>
-        </div>
+        <a href="/planner" className="btn-plan">Plan a Route</a>
       </header>
 
-      {/* ═══ HERO SECTION ═══ */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <div className="tag-monsoon">
-            <span style={{ color: "#64748b", fontWeight: 500 }}>•</span> Bengaluru Flood Intelligence <span style={{ color: "#64748b", fontWeight: 500, margin: "0 4px" }}>•</span> Monsoon 2026
+      {/* ── HERO ── */}
+      <main className="land-hero">
+        {/* LEFT */}
+        <div className="hero-left">
+          <h1 className="hero-headline">
+            Bengaluru floods.<br />
+            <span className="orange">Your commute</span><br />
+            doesn&apos;t.
+          </h1>
+
+          {/* LIVE CONDITIONS CARD */}
+          <div className="live-card">
+            <div className="live-card-header">
+              <span className="live-card-title">Live Conditions</span>
+              <span className="live-badge">
+                <span className="live-dot" />LIVE
+              </span>
+            </div>
+            <div className="live-card-row">
+              <div className="live-metric">
+                <div className="live-metric-val blue">{weather.current_mm_per_hour || "18.5"}</div>
+                <div className="live-metric-label">mm/h Rainfall</div>
+              </div>
+              <div className="live-metric">
+                <div className="live-metric-val">{weather.forecast_3h_mm || "32"}</div>
+                <div className="live-metric-label">Forecast 3h</div>
+              </div>
+              <div className="live-metric">
+                <div className="live-metric-val red">4</div>
+                <div className="live-metric-label">Critical Zones</div>
+              </div>
+              <div className="live-metric">
+                <div className="live-metric-val orange">{weather.temp || "26"}°</div>
+                <div className="live-metric-label">Temp °C</div>
+              </div>
+            </div>
+            <div className="live-card-ts">Last updated {now}</div>
           </div>
-          <h2>Bengaluru <span>floods.</span><br />Your commute doesn&apos;t have to.</h2>
-          <p>FlowGuard AI tracks live rainfall, scores flood-risk across 15 chronic waterlogging hotspots, and routes you around them — <span>before</span> you hit the jam.</p>
-          <div className="panel-actions">
-            <a href="/planner" className="btn-orange" style={{ padding: "14px 28px" }}><i className="fa-solid fa-arrow-right" /> Plan a Route</a>
-            <a href="/dashboard" className="btn-secondary">View City Dashboard <i className="fa-solid fa-chart-simple" style={{ color: "var(--brand-blue)" }} /></a>
-          </div>
-          <div className="brand-attribution">
-            <span>Powered by</span>
-            <span className="engine-name"><i className="fa-solid fa-sparkles" style={{ color: "#2563eb" }} /> Gemini</span>
-            <span className="engine-name"><i className="fa-solid fa-map" style={{ color: "#000" }} /> mapbox</span>
-            <span className="engine-name"><i className="fa-solid fa-cloud" style={{ color: "#ea580c" }} /> OpenWeather</span>
-            <span className="engine-name"><i className="fa-solid fa-bolt" style={{ color: "#10b981" }} /> Supabase</span>
+
+          {/* KPI ROW */}
+          <div className="kpi-strip">
+            <div className="kpi-chip">
+              <div className="kpi-chip-icon blue"><i className="fa-solid fa-bullseye" /></div>
+              <div>
+                <div className="kpi-chip-val">86.7%</div>
+                <div className="kpi-chip-label">Accuracy</div>
+                <div className="kpi-chip-trend">▲4.3%</div>
+              </div>
+            </div>
+            <div className="kpi-chip">
+              <div className="kpi-chip-icon green"><i className="fa-solid fa-clock-rotate-left" /></div>
+              <div>
+                <div className="kpi-chip-val">24.3%</div>
+                <div className="kpi-chip-label">Commute↓</div>
+                <div className="kpi-chip-trend">▲3.1%</div>
+              </div>
+            </div>
+            <div className="kpi-chip">
+              <div className="kpi-chip-icon red"><i className="fa-solid fa-triangle-exclamation" /></div>
+              <div>
+                <div className="kpi-chip-val">4</div>
+                <div className="kpi-chip-label">High-Risk</div>
+                <div className="kpi-chip-trend">▲1</div>
+              </div>
+            </div>
+            <div className="kpi-chip">
+              <div className="kpi-chip-icon yellow"><i className="fa-solid fa-bell" /></div>
+              <div>
+                <div className="kpi-chip-val">22 min</div>
+                <div className="kpi-chip-label">Early Alert</div>
+                <div className="kpi-chip-trend">▲6 min</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* MAP */}
-        <div className="map-sandbox">
-          {/* Real Google Map layer */}
-          <div className="map-real-layer">
+        {/* RIGHT — MAP */}
+        <div className="hero-right">
+          <div className="hero-map-wrap">
             <MapPanel />
           </div>
-
-          {/* Floating UI overlays */}
-          <div className="map-top-bar">
-            <div className="search-and-status">
-              <div className="map-live-status">
-                <span className="dot-live" /> Live <span style={{ opacity: 0.5, margin: "0 4px" }}>•</span> Updated 4 min ago
-              </div>
-              <div className="map-search-box">
-                <i className="fa-solid fa-magnifying-glass" />
-                <input type="text" placeholder="Search location..." readOnly />
-              </div>
-            </div>
-            <div className="map-right-stats">
-              <div className="map-stat-item"><span className="m-label">Rainfall</span><span className="m-val blue">18.5 mm/h</span></div>
-              <div className="map-stat-item"><span className="m-label">3H Forecast</span><span className="m-val" style={{ color: "#1e293b" }}>32 mm</span></div>
-              <div className="map-stat-item"><span className="m-label">Severe Zones</span><span className="m-val" style={{ color: "var(--risk-severe)" }}>2</span></div>
-              <div className="map-stat-item"><span className="m-label">Status</span><span className="status-alert-tag">Alert</span></div>
-            </div>
-          </div>
-
-          <div className="legend-box">
-            <div className="legend-title">Risk Level</div>
-            <div className="legend-row"><div className="legend-dot" style={{ background: "var(--risk-severe)" }} /> Severe</div>
-            <div className="legend-row"><div className="legend-dot" style={{ background: "var(--risk-high)" }} /> High</div>
-            <div className="legend-row"><div className="legend-dot" style={{ background: "var(--risk-medium)" }} /> Medium</div>
-            <div className="legend-row"><div className="legend-dot" style={{ background: "var(--risk-low)" }} /> Low</div>
-          </div>
-
-          <div className="mapbox-attribution">
-            <i className="fa-solid fa-location-dot" /> Google Maps 3D
-          </div>
         </div>
-      </section>
-
-      {/* ═══ KPI SECTION ═══ */}
-      <section className="kpi-section">
-        <div className="kpi-section-header">
-          <h3>City Impact Metrics</h3>
-          <p>Real-time performance indicators powered by AI analysis</p>
-        </div>
-        <div className="quick-stats-row">
-          <div className="mini-stat-card">
-            <div className="stat-icon-wrap si-blue"><i className="fa-solid fa-bullseye" /></div>
-            <div className="stat-body">
-              <div className="stat-header">
-                <span className="stat-val">86.7</span>
-                <span className="stat-unit">%</span>
-                <span className="stat-trend trend-up"><i className="fa-solid fa-caret-up" /> 4.3%</span>
-              </div>
-              <div className="stat-label">Prediction Accuracy</div>
-            </div>
-          </div>
-          <div className="mini-stat-card">
-            <div className="stat-icon-wrap si-green"><i className="fa-solid fa-clock-rotate-left" /></div>
-            <div className="stat-body">
-              <div className="stat-header">
-                <span className="stat-val">24.3</span>
-                <span className="stat-unit">%</span>
-                <span className="stat-trend trend-up"><i className="fa-solid fa-caret-up" /> 3.1%</span>
-              </div>
-              <div className="stat-label">Avg. Commute Reduction</div>
-            </div>
-          </div>
-          <div className="mini-stat-card">
-            <div className="stat-icon-wrap si-red"><i className="fa-solid fa-triangle-exclamation" /></div>
-            <div className="stat-body">
-              <div className="stat-header">
-                <span className="stat-val">4</span>
-                <span className="stat-trend trend-up" style={{ color: "#64748b" }}><i className="fa-solid fa-caret-up" /> 1</span>
-              </div>
-              <div className="stat-label">High-Risk Zones Flagged</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FEATURES SECTION ═══ */}
-      <section className="features-section">
-        <div className="features-section-header">
-          <h3>How It Works</h3>
-          <p>AI-powered intelligence across the full monsoon commute lifecycle</p>
-        </div>
-        <div className="features-footer-row">
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-blue"><i className="fa-solid fa-cloud-sun-rain" /></div>
-            <div className="f-content"><h4>Live Weather</h4><p>Real-time rainfall and forecasts from OpenWeatherMap.</p></div>
-          </div>
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-orange"><i className="fa-solid fa-shield-heart" /></div>
-            <div className="f-content"><h4>AI Risk Engine</h4><p>Gemini AI scores flood-risk zones using live data and historical patterns.</p></div>
-          </div>
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-purple"><i className="fa-solid fa-route" /></div>
-            <div className="f-content"><h4>Smart Routes</h4><p>AI ranks routes to avoid high-risk zones and save your time.</p></div>
-          </div>
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-green"><i className="fa-solid fa-bell" /></div>
-            <div className="f-content"><h4>Early Alerts</h4><p>Get notified before flooding turns into gridlock.</p></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FOOTER ═══ */}
-      <footer className="page-footer">
-        <div className="footer-left">
-          <span>CODEX 2026</span>
-          <span className="footer-dot" />
-          <span>SDG 11 · SDG 13</span>
-        </div>
-        <p>Synthetic data disclosed · Built for hackathon demonstration</p>
-      </footer>
-    </div>
+      </main>
+    </>
   );
 }
