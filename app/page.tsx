@@ -1,39 +1,10 @@
 import "./landing.css";
 import { MapPanel } from "@/components/map-panel";
+import Link from "next/link";
 
 export default function LandingPage() {
   return (
-    <div className="dashboard-container">
-      {/* ═══ HEADER ═══ */}
-      <header>
-        <div className="logo-area">
-          <div className="logo-icon">
-            <i className="fa-solid fa-shield-halved" />
-          </div>
-          <div className="logo-text">
-            <h1>FlowGuard <span>AI</span></h1>
-            <p>Bengaluru Flood Intelligence</p>
-          </div>
-        </div>
-
-        <div className="nav-center">
-          <a href="/planner" className="nav-item"><i className="fa-solid fa-map-location-dot" /> Planner</a>
-          <a href="/assistant" className="nav-item active"><i className="fa-solid fa-user-shield" /> Assistant</a>
-          <a href="/dashboard" className="nav-item"><i className="fa-solid fa-chart-line" /> City Dashboard</a>
-        </div>
-
-        <div className="header-actions">
-          <a href="/planner" className="btn-orange">Plan a Route <i className="fa-solid fa-arrow-right" /></a>
-          <div className="live-rainfall-widget">
-            <i className="fa-solid fa-cloud-showers-heavy" style={{ color: "#0284c7", fontSize: "18px" }} />
-            <div className="weather-info">
-              <div className="val">18.5 <span style={{ fontSize: "10px", fontWeight: 600 }}>mm/h</span></div>
-              <div className="label"><span className="dot-live" /> Live Rainfall</div>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* ═══ HERO SECTION ═══ */}
       <section className="hero-section">
         <div className="hero-content">
@@ -43,13 +14,14 @@ export default function LandingPage() {
           <h2>Bengaluru <span>floods.</span><br />Your commute doesn&apos;t have to.</h2>
           <p>FlowGuard AI tracks live rainfall, scores flood-risk across 15 chronic waterlogging hotspots, and routes you around them — <span>before</span> you hit the jam.</p>
           <div className="panel-actions">
-            <a href="/planner" className="btn-orange" style={{ padding: "14px 28px" }}><i className="fa-solid fa-arrow-right" /> Plan a Route</a>
-            <a href="/dashboard" className="btn-secondary">View City Dashboard <i className="fa-solid fa-chart-simple" style={{ color: "var(--brand-blue)" }} /></a>
+            <Link href="/planner" className="btn-orange" style={{ padding: "14px 28px" }}><i className="fa-solid fa-arrow-right" /> Plan a Route</Link>
+            <Link href="/dashboard" className="btn-secondary">View City Dashboard <i className="fa-solid fa-chart-simple" style={{ color: "var(--brand-blue)" }} /></Link>
           </div>
           <div className="brand-attribution">
             <span>Powered by</span>
             <span className="engine-name"><i className="fa-solid fa-sparkles" style={{ color: "#2563eb" }} /> Gemini</span>
-            <span className="engine-name"><i className="fa-solid fa-map" style={{ color: "#000" }} /> mapbox</span>
+            <span className="engine-name"><i className="fa-solid fa-map" style={{ color: "#4285F4" }} /> Google Maps 3D</span>
+            <span className="engine-name"><i className="fa-solid fa-route" style={{ color: "#000" }} /> Mapbox Directions</span>
             <span className="engine-name"><i className="fa-solid fa-cloud" style={{ color: "#ea580c" }} /> OpenWeather</span>
             <span className="engine-name"><i className="fa-solid fa-bolt" style={{ color: "#10b981" }} /> Supabase</span>
           </div>
@@ -64,15 +36,7 @@ export default function LandingPage() {
 
           {/* Floating UI overlays */}
           <div className="map-top-bar">
-            <div className="search-and-status">
-              <div className="map-live-status">
-                <span className="dot-live" /> Live <span style={{ opacity: 0.5, margin: "0 4px" }}>•</span> Updated 4 min ago
-              </div>
-              <div className="map-search-box">
-                <i className="fa-solid fa-magnifying-glass" />
-                <input type="text" placeholder="Search location..." readOnly />
-              </div>
-            </div>
+            <div />
             <div className="map-right-stats">
               <div className="map-stat-item"><span className="m-label">Rainfall</span><span className="m-val blue">18.5 mm/h</span></div>
               <div className="map-stat-item"><span className="m-label">3H Forecast</span><span className="m-val" style={{ color: "#1e293b" }}>32 mm</span></div>
@@ -95,83 +59,477 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ═══ KPI SECTION ═══ */}
-      <section className="kpi-section">
-        <div className="kpi-section-header">
-          <h3>City Impact Metrics</h3>
-          <p>Real-time performance indicators powered by AI analysis</p>
+      {/* ═══ PROBLEM & HOTSPOTS SECTION (Slides 1-3) ═══ */}
+      <section className="pitch-section problem-section">
+        <div className="section-header">
+          <span className="section-tag">NAMMA BENGALURU</span>
+          <h2>We suggest the safest route — <span>not always</span> the shortest.</h2>
+          <p className="subtitle">Monsoon seasons turn Bengaluru&apos;s critical traffic corridors into gridlocks due to manual alerts and delayed municipal responses.</p>
         </div>
-        <div className="quick-stats-row">
-          <div className="mini-stat-card">
-            <div className="stat-icon-wrap si-blue"><i className="fa-solid fa-bullseye" /></div>
-            <div className="stat-body">
-              <div className="stat-header">
-                <span className="stat-val">86.7</span>
-                <span className="stat-unit">%</span>
-                <span className="stat-trend trend-up"><i className="fa-solid fa-caret-up" /> 4.3%</span>
+
+        <div className="problem-right-card full-width">
+          <h3 className="hotspots-section-title">Chronic Waterlogging Hotspots</h3>
+          <div className="hotspots-list-3col">
+            <div className="hotspot-item">
+              <div className="hs-image-wrap">
+                <img src="https://cdn.gamma.app/ngfrvq6ixud1yz3/ffd4d086f4a04060a1be162343123453/original/image.png" alt="Silk Board Junction flooding" />
               </div>
-              <div className="stat-label">Prediction Accuracy</div>
+              <div className="hs-detail">
+                <div className="hs-header">
+                  <span className="hs-number">01</span>
+                  <h4>Silk Board Junction</h4>
+                </div>
+                <p>One of the city&apos;s worst bottlenecks; prone to immediate underpass drainage failure.</p>
+              </div>
             </div>
-          </div>
-          <div className="mini-stat-card">
-            <div className="stat-icon-wrap si-green"><i className="fa-solid fa-clock-rotate-left" /></div>
-            <div className="stat-body">
-              <div className="stat-header">
-                <span className="stat-val">24.3</span>
-                <span className="stat-unit">%</span>
-                <span className="stat-trend trend-up"><i className="fa-solid fa-caret-up" /> 3.1%</span>
+            <div className="hotspot-item">
+              <div className="hs-image-wrap">
+                <img src="https://cdn.gamma.app/ngfrvq6ixud1yz3/4e510505121e4ef6a9c03d7e6d8c6a76/original/image.png" alt="Bellandur Outer Ring Road flooding" />
               </div>
-              <div className="stat-label">Avg. Commute Reduction</div>
+              <div className="hs-detail">
+                <div className="hs-header">
+                  <span className="hs-number">02</span>
+                  <h4>Bellandur ORR</h4>
+                </div>
+                <p>Critical IT corridor that floods rapidly, blocking thousands of tech commuters.</p>
+              </div>
             </div>
-          </div>
-          <div className="mini-stat-card">
-            <div className="stat-icon-wrap si-red"><i className="fa-solid fa-triangle-exclamation" /></div>
-            <div className="stat-body">
-              <div className="stat-header">
-                <span className="stat-val">4</span>
-                <span className="stat-trend trend-up" style={{ color: "#64748b" }}><i className="fa-solid fa-caret-up" /> 1</span>
+            <div className="hotspot-item">
+              <div className="hs-image-wrap">
+                <img src="https://cdn.gamma.app/ngfrvq6ixud1yz3/3fded29c170a4a9ca403b37782e0c6b1/original/image.png" alt="Koramangala Underpass flooding" />
               </div>
-              <div className="stat-label">High-Risk Zones Flagged</div>
+              <div className="hs-detail">
+                <div className="hs-header">
+                  <span className="hs-number">03</span>
+                  <h4>Koramangala Underpass</h4>
+                </div>
+                <p>Low-lying critical crossing subject to sudden inundation during moderate spells.</p>
+              </div>
+            </div>
+            <div className="hotspot-item">
+              <div className="hs-image-wrap">
+                <img src="https://cdn.gamma.app/ngfrvq6ixud1yz3/d5bd66e2007d4bb381b682568175194e/original/image.png" alt="Banasawadi flooding" />
+              </div>
+              <div className="hs-detail">
+                <div className="hs-header">
+                  <span className="hs-number">04</span>
+                  <h4>Banasawadi</h4>
+                </div>
+                <p>Key transit ward vulnerable to severe run-off accumulation and waterlogging.</p>
+              </div>
+            </div>
+            <div className="hotspot-item">
+              <div className="hs-image-wrap">
+                <img src="https://cdn.gamma.app/ngfrvq6ixud1yz3/2298cc788c0a4e4083a516cf06233e82/original/image.png" alt="Manyata Tech Park flooding" />
+              </div>
+              <div className="hs-detail">
+                <div className="hs-header">
+                  <span className="hs-number">05</span>
+                  <h4>Manyata Tech Park</h4>
+                </div>
+                <p>Major tech hub where corporate exits and surrounding lanes get blocked rapidly.</p>
+              </div>
+            </div>
+            <div className="hotspot-item">
+              <div className="hs-image-wrap">
+                <img src="https://cdn.gamma.app/ngfrvq6ixud1yz3/8db4d04ec0da483e8ccef96671de1aaa/original/image.png" alt="Whitefield Corridor flooding" />
+              </div>
+              <div className="hs-detail">
+                <div className="hs-header">
+                  <span className="hs-number">06</span>
+                  <h4>Whitefield Corridor</h4>
+                </div>
+                <p>Major corporate transit route frequently gridlocked by poor stormwater discharge.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ FEATURES SECTION ═══ */}
-      <section className="features-section">
-        <div className="features-section-header">
-          <h3>How It Works</h3>
-          <p>AI-powered intelligence across the full monsoon commute lifecycle</p>
+      {/* ═══ IMPACT OF URBAN FLOODING (Slide 4) ═══ */}
+      <section className="pitch-section impact-section">
+        <div className="section-header">
+          <span className="section-tag">THE PROBLEM</span>
+          <h2>The True Cost of Urban Flooding</h2>
+          <p className="subtitle">Waterlogged streets are more than just a commute delay—they disrupt the city&apos;s health, economy, and environment.</p>
         </div>
-        <div className="features-footer-row">
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-blue"><i className="fa-solid fa-cloud-sun-rain" /></div>
-            <div className="f-content"><h4>Live Weather</h4><p>Real-time rainfall and forecasts from OpenWeatherMap.</p></div>
+
+        <div className="impact-grid-six">
+          <div className="impact-card-six">
+            <div className="ic-icon"><i className="fa-solid fa-car-side" /></div>
+            <h3>Severe Traffic Congestion</h3>
+            <p>Commutes lengthen by 3x, locking vehicles in multi-kilometer tailbacks across major arterials.</p>
           </div>
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-orange"><i className="fa-solid fa-shield-heart" /></div>
-            <div className="f-content"><h4>AI Risk Engine</h4><p>Gemini AI scores flood-risk zones using live data and historical patterns.</p></div>
+          <div className="impact-card-six">
+            <div className="ic-icon"><i className="fa-solid fa-smog" /></div>
+            <h3>Increased CO₂ Emissions</h3>
+            <p>Prolonged idling and stop-and-go detours cause vehicular emissions to spike heavily during rain spells.</p>
           </div>
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-purple"><i className="fa-solid fa-route" /></div>
-            <div className="f-content"><h4>Smart Routes</h4><p>AI ranks routes to avoid high-risk zones and save your time.</p></div>
+          <div className="impact-card-six">
+            <div className="ic-icon"><i className="fa-solid fa-gas-pump" /></div>
+            <h3>Fuel Wastage & Economic Loss</h3>
+            <p>Burned fuel in traffic translates to significant daily financial loss and wasted economic productivity.</p>
           </div>
-          <div className="feature-showcase-card">
-            <div className="f-icon-wrap fi-green"><i className="fa-solid fa-bell" /></div>
-            <div className="f-content"><h4>Early Alerts</h4><p>Get notified before flooding turns into gridlock.</p></div>
+          <div className="impact-card-six">
+            <div className="ic-icon"><i className="fa-solid fa-truck-medical" /></div>
+            <h3>Delayed Emergency Services</h3>
+            <p>Ambulances and fire engines get trapped in gridlock, risking lives when response time is critical.</p>
+          </div>
+          <div className="impact-card-six">
+            <div className="ic-icon"><i className="fa-solid fa-road-barrier" /></div>
+            <h3>Infrastructure Damage</h3>
+            <p>Asphalt erosion, structural stress on underpasses, and drainage blockages degrade municipal assets.</p>
+          </div>
+          <div className="impact-card-six">
+            <div className="ic-icon"><i className="fa-solid fa-wind" /></div>
+            <h3>Air Quality Index (AQI) Spikes</h3>
+            <p>Localized exhaust accumulation in slow-moving traffic columns leads to immediate degradation of city air quality.</p>
           </div>
         </div>
       </section>
 
-      {/* ═══ FOOTER ═══ */}
-      <footer className="page-footer">
-        <div className="footer-left">
-          <span>CODEX 2026</span>
-          <span className="footer-dot" />
-          <span>SDG 11 · SDG 13</span>
+      {/* ═══ DUAL-STAKEHOLDER SOLUTION SECTION (Slide 5) ═══ */}
+      <section className="pitch-section solution-section">
+        <div className="section-header">
+          <span className="section-tag">THE SOLUTION</span>
+          <h2>A Shared Platform for a Resilient City</h2>
+          <p className="subtitle">FlowGuard AI bridges the gap between commuter navigation and municipal drainage action.</p>
         </div>
-        <p>Synthetic data disclosed · Built for hackathon demonstration</p>
-      </footer>
-    </div>
+
+        <div className="solution-dual-grid">
+          <div className="sol-card citizen-sol">
+            <div className="sol-badge-icon"><i className="fa-solid fa-users" /></div>
+            <h3>For Citizens & Commuters</h3>
+            <p>Empowering daily travelers to navigate Bengaluru safely during intense monsoon rainfalls.</p>
+            <ul className="sol-list">
+              <li>
+                <i className="fa-solid fa-circle-check" />
+                <div>
+                  <strong>Smart Risk-Averse Routing</strong>
+                  <p>Reroutes you dynamically away from active flood zones, not just traffic delays.</p>
+                </div>
+              </li>
+              <li>
+                <i className="fa-solid fa-circle-check" />
+                <div>
+                  <strong>Real-Time Flood Alerts</strong>
+                  <p>Receive live, location-based notifications on road levels before beginning your travel.</p>
+                </div>
+              </li>
+              <li>
+                <i className="fa-solid fa-circle-check" />
+                <div>
+                  <strong>AI Travel Assistant</strong>
+                  <p>Conversational assistant provides immediate safety updates and route context on demand.</p>
+                </div>
+              </li>
+            </ul>
+            <Link href="/planner" className="sol-cta">Plan a Route <i className="fa-solid fa-chevron-right" /></Link>
+          </div>
+
+          <div className="sol-card government-sol">
+            <div className="sol-badge-icon"><i className="fa-solid fa-landmark" /></div>
+            <h3>For Civic Authorities & Govt</h3>
+            <p>Equipping municipal decision-makers with live intelligence to deploy drainage interventions.</p>
+            <ul className="sol-list">
+              <li>
+                <i className="fa-solid fa-circle-check" />
+                <div>
+                  <strong>Drainage Vulnerability Mapping</strong>
+                  <p>Aggregates risk levels across chronic waterlogging points to pinpoint bottlenecks.</p>
+                </div>
+              </li>
+              <li>
+                <i className="fa-solid fa-circle-check" />
+                <div>
+                  <strong>AI-Prioritized Infrastructure Reports</strong>
+                  <p>Generates actionable, structured recommendation reports for desilting or pump deployments.</p>
+                </div>
+              </li>
+              <li>
+                <i className="fa-solid fa-circle-check" />
+                <div>
+                  <strong>Resource Optimization</strong>
+                  <p>Prioritizes municipal engineering surveys and temporary pump placements based on risk scores.</p>
+                </div>
+              </li>
+            </ul>
+            <Link href="/dashboard" className="sol-cta">View City Dashboard <i className="fa-solid fa-chevron-right" /></Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SYSTEM ARCHITECTURE & TECH STACK (Slides 6-7) ═══ */}
+      <section className="pitch-section architecture-section">
+        <div className="section-header">
+          <span className="section-tag">UNDER THE HOOD</span>
+          <h2>AI-Powered Core Architecture</h2>
+          <p className="subtitle">FlowGuard AI aggregates real-time weather and spatial datasets into Gemini&apos;s reasoning engine to output safety reports.</p>
+        </div>
+
+        <div className="architecture-layout">
+          {/* FLOW WORKFLOW */}
+          <div className="workflow-diagram">
+            <h3>Workflow & Data Pipelines</h3>
+            <div className="flow-steps-grid">
+              <div className="flow-box">
+                <span className="fb-tag">01. Ingestion</span>
+                <div className="fb-icon"><i className="fa-solid fa-cloud-arrow-down" /></div>
+                <h4>Context Aggregation</h4>
+                <ul>
+                  <li>OpenWeather API (Live rain)</li>
+                  <li>Historical Flood Dataset</li>
+                  <li>Mapbox Directions API</li>
+                  <li>User Commute Destination</li>
+                </ul>
+              </div>
+              <div className="flow-arrow"><i className="fa-solid fa-arrow-right" /></div>
+              <div className="flow-box active-flow">
+                <span className="fb-tag">02. AI Reasoning</span>
+                <div className="fb-icon"><i className="fa-solid fa-brain" /></div>
+                <h4>Gemini AI Engine</h4>
+                <ul>
+                  <li>Active Risk Assessment</li>
+                  <li>Dynamic Route Ranking</li>
+                  <li>Natural Language Reasoning</li>
+                  <li>Infrastructure Advisory</li>
+                </ul>
+              </div>
+              <div className="flow-arrow"><i className="fa-solid fa-arrow-right" /></div>
+              <div className="flow-box">
+                <span className="fb-tag">03. Outputs</span>
+                <div className="fb-icon"><i className="fa-solid fa-desktop" /></div>
+                <h4>Decision Support</h4>
+                <ul>
+                  <li>Best Commute Route</li>
+                  <li>Proactive Safety Tips</li>
+                  <li>Govt Action Alerts</li>
+                  <li>City Analytics Dashboard</li>
+                </ul>
+              </div>
+            </div>
+            <div className="feedback-loop-bar">
+              <i className="fa-solid fa-rotate-left" style={{ color: "var(--brand-orange)" }} />
+              <span><strong>Feedback Loop & Continuous Learning:</strong> User feedback logs are stored in PostgreSQL for continuous model prompt refinement.</span>
+            </div>
+          </div>
+
+          {/* TECH STACK GRID */}
+          <div className="tech-stack-container">
+            <h3>Engineering Technology Stack</h3>
+            <div className="tech-grid">
+              <div className="tech-card">
+                <div className="tc-logo nextjs-logo">N</div>
+                <div className="tc-info">
+                  <h4>Next.js</h4>
+                  <p>Frontend framework & secure API routing.</p>
+                </div>
+              </div>
+              <div className="tech-card">
+                <div className="tc-logo supabase-logo"><i className="fa-solid fa-bolt" /></div>
+                <div className="tc-info">
+                  <h4>Supabase Edge Functions</h4>
+                  <p>Secure serverless proxy for AI and Weather APIs.</p>
+                </div>
+              </div>
+              <div className="tech-card">
+                <div className="tc-logo postgres-logo"><i className="fa-solid fa-database" /></div>
+                <div className="tc-info">
+                  <h4>Supabase PostgreSQL</h4>
+                  <p>Stores historical flood data, user logs, and preferences.</p>
+                </div>
+              </div>
+              <div className="tech-card">
+                <div className="tc-logo mapbox-logo"><i className="fa-solid fa-map" /></div>
+                <div className="tc-info">
+                  <h4>Mapbox API</h4>
+                  <p>Route optimization and geospatial mapping.</p>
+                </div>
+              </div>
+              <div className="tech-card">
+                <div className="tc-logo weather-logo"><i className="fa-solid fa-cloud-sun" /></div>
+                <div className="tc-info">
+                  <h4>OpenWeather API</h4>
+                  <p>Real-time weather telemetry & precipitation forecasts.</p>
+                </div>
+              </div>
+              <div className="tech-card">
+                <div className="tc-logo gemini-logo"><i className="fa-solid fa-sparkles" /></div>
+                <div className="tc-info">
+                  <h4>Gemini AI / LLM</h4>
+                  <p>Risk-scoring reasoning engine & conversational planner.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CUSTOMER EXPERIENCE JOURNEY (Slide 8) ═══ */}
+      <section className="pitch-section journey-section">
+        <div className="section-header">
+          <span className="section-tag">COMMUTER EXPERIENCE</span>
+          <h2>The Journey to a Safer Commute</h2>
+          <p className="subtitle">How FlowGuard AI keeps you moving smoothly through unpredictable monsoon weather.</p>
+        </div>
+
+        <div className="stepper-journey">
+          <div className="step-card">
+            <span className="step-number">01</span>
+            <div className="step-content">
+              <h4>Enter Destination</h4>
+              <p>User launches the app and inputs their commute route inside the interactive planner.</p>
+            </div>
+          </div>
+          <div className="step-card">
+            <span className="step-number">02</span>
+            <div className="step-content">
+              <h4>Context Aggregation</h4>
+              <p>System automatically queries live rainfall forecasts, historic hotspot risks, and traffic telemetry.</p>
+            </div>
+          </div>
+          <div className="step-card">
+            <span className="step-number">03</span>
+            <div className="step-content">
+              <h4>AI Recommendation</h4>
+              <p>Gemini AI filters route alternatives, ranking them to find the path that balances risk and travel time.</p>
+            </div>
+          </div>
+          <div className="step-card">
+            <span className="step-number">04</span>
+            <div className="step-content">
+              <h4>Live Alerts & Navigation</h4>
+              <p>Commuter travels with real-time updates. <em>Example: &quot;Hebbal Flyover flooding has increased; route adjustment advised.&quot;</em></p>
+            </div>
+          </div>
+          <div className="step-card">
+            <span className="step-number">05</span>
+            <div className="step-content">
+              <h4>Proactive Warnings</h4>
+              <p>Get notified before you travel. <em>Example: &quot;Heavy rainfall expected at Silk Board in 30 minutes. Leave early.&quot;</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SMART GOVERNANCE & DRAINAGE INFRASTRUCTURE (Slides 9-10) ═══ */}
+      <section className="pitch-section governance-section">
+        <div className="section-header">
+          <span className="section-tag">SMART GOVERNANCE</span>
+          <h2>AI-Powered Municipal Decision Support</h2>
+          <p className="subtitle">Helping city planners transition from emergency reaction to proactive resilience.</p>
+        </div>
+
+        <div className="governance-grid">
+          {/* RISK LEVELS */}
+          <div className="gov-risk-tiers">
+            <h3>AI Risk & Priority Assessment</h3>
+            <div className="risk-tier-item severe-tier">
+              <div className="rt-header">
+                <span className="rt-badge">Priority 1: High/Severe Risk</span>
+                <h4>Silk Board Junction</h4>
+              </div>
+              <p><strong>Action Recommended:</strong> Stormwater drain desilting, immediate debris clearance, and capacity verification of underpass outlets.</p>
+            </div>
+            <div className="risk-tier-item high-tier">
+              <div className="rt-header">
+                <span className="rt-badge">Priority 2: Medium/High Risk</span>
+                <h4>Bellandur Outer Ring Road</h4>
+              </div>
+              <p><strong>Action Recommended:</strong> Deploy mobile pump units, monitor catchment areas remotely, and clear connected water pathways.</p>
+            </div>
+            <div className="risk-tier-item safe-tier">
+              <div className="rt-header">
+                <span className="rt-badge">Safe Areas: Low Risk</span>
+                <h4>Regular Monitoring</h4>
+              </div>
+              <p><strong>Action Recommended:</strong> Scheduled cleaning intervals. No immediate resource mobilization required.</p>
+            </div>
+          </div>
+
+          {/* DRAINAGE INFRA ACTIONS */}
+          <div className="gov-infra-actions">
+            <h3>Improving Drainage Infrastructure</h3>
+            <p className="infra-intro">FlowGuard AI translates raw waterlogging forecasts into specific, prioritized engineering actions visible on the municipal dashboard.</p>
+            
+            <div className="actions-list">
+              <div className="action-bullet">
+                <div className="ab-icon"><i className="fa-solid fa-broom" /></div>
+                <div className="ab-body">
+                  <h4>1. Clean Blocked Drains</h4>
+                  <p>AI identifies coordinates where litter and silt build-up cause stormwater backup, alerting local sanitary staff.</p>
+                </div>
+              </div>
+              <div className="action-bullet">
+                <div className="ab-icon"><i className="fa-solid fa-pump-soap" /></div>
+                <div className="ab-body">
+                  <h4>2. Deploy Mobile Pumps</h4>
+                  <p>Triggers location alerts for ward engineers to position pump units at low-elevation underpasses ahead of heavy rainfall.</p>
+                </div>
+              </div>
+              <div className="action-bullet">
+                <div className="ab-icon"><i className="fa-solid fa-arrow-up-right-dots" /></div>
+                <div className="ab-body">
+                  <h4>3. Upgrade Drainage Capacity</h4>
+                  <p>Highlights chronic areas requiring culvert widening or stormwater system expansion based on summer monsoon volumes.</p>
+                </div>
+              </div>
+              <div className="action-bullet">
+                <div className="ab-icon"><i className="fa-solid fa-clipboard-list" /></div>
+                <div className="ab-body">
+                  <h4>4. Prioritize Engineering Surveys</h4>
+                  <p>Flags structural faults (like reverse slopes or collapsed piping) for full site investigation by municipal planning bodies.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ═══ EXPECTED IMPACT & PERFORMANCE (Slides 11 & 13) ═══ */}
+      <section className="pitch-section impact-kpi-section">
+        <div className="section-header">
+          <span className="section-tag">EXPECTED IMPACT</span>
+          <h2>Measured Performance Outcomes</h2>
+          <p className="subtitle">Projected project effectiveness when FlowGuard AI is deployed at city scale.</p>
+        </div>
+
+        <div className="metrics-row">
+          <div className="metric-box">
+            <div className="mb-value">30%</div>
+            <div className="mb-label">Reduction in Traffic Delays</div>
+            <p className="mb-desc">Fewer vehicles entering flooded streets minimizes gridlock and bottleneck delays.</p>
+          </div>
+          <div className="metric-box">
+            <div className="mb-value">20%</div>
+            <div className="mb-label">Lower Carbon Emissions</div>
+            <p className="mb-desc">Decreased commuter transit times and idling reduces greenhouse gas pollution.</p>
+          </div>
+          <div className="metric-box">
+            <div className="mb-value">5-6%</div>
+            <div className="mb-label">Fuel Savings</div>
+            <p className="mb-desc">Optimized travel speeds and detour avoidance saves fuel across all transiting commuters.</p>
+          </div>
+          <div className="metric-box">
+            <div className="mb-value">15%</div>
+            <div className="mb-label">Faster Emergency Response</div>
+            <p className="mb-desc">AI-routed prioritisation lets critical services navigate around gridlocked hotspots.</p>
+          </div>
+        </div>
+
+        <div className="impact-footer-highlights">
+          <div className="highlight-tag-box">
+            <i className="fa-solid fa-circle-check" />
+            <span><strong>100% AI-Powered Monitoring:</strong> Scalable monitoring with zero manual survey cost per zone.</span>
+          </div>
+          <div className="highlight-tag-box">
+            <i className="fa-solid fa-circle-check" />
+            <span><strong>Proactive Infrastructure Planning:</strong> Structured data output drives long-term municipal capital allocation.</span>
+          </div>
+        </div>
+      </section>
+
+    </>
   );
 }

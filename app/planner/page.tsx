@@ -57,22 +57,6 @@ export default function PlannerPage() {
 
   return (
     <div className="planner-page">
-      {/* HEADER */}
-      <header className="planner-nav">
-        <div className="logo-area">
-          <div className="logo-icon">🛡️</div>
-          <div className="logo-text"><h1>FLOWGUARD AI</h1><span>Bengaluru Flood Intelligence</span></div>
-        </div>
-        <nav>
-          <a href="/planner" className="active"><span className="material-symbols-outlined">map</span> Planner</a>
-          <a href="/assistant"><span className="material-symbols-outlined">smart_toy</span> Assistant</a>
-          <a href="/dashboard"><span className="material-symbols-outlined">dashboard</span> City Dashboard</a>
-        </nav>
-        <div className="header-right">
-          <div className="live-rain-widget">⛈️ <strong>{weather.current_mm_per_hour} mm/h</strong> <span className="live-dot" /> Live Rainfall</div>
-        </div>
-      </header>
-
       {/* MAIN */}
       <div className="main-container">
         {/* MAP */}

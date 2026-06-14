@@ -2,10 +2,11 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  height: 100vh;
+  height: calc(100vh - 200px);
+  min-height: 550px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 0;
 }
 
 .assistant-header {

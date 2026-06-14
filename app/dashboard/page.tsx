@@ -50,21 +50,6 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-page">
-      {/* HEADER */}
-      <header className="dash-header">
-        <div className="logo-area">
-          <div className="logo-icon">🛡️</div>
-          <div className="logo-text"><h1>FLOWGUARD AI</h1><span>Bengaluru Flood Intelligence</span></div>
-        </div>
-        <nav>
-          <a href="/planner"><span className="material-symbols-outlined">map</span> Planner</a>
-          <a href="/assistant"><span className="material-symbols-outlined">smart_toy</span> Assistant</a>
-          <a href="/dashboard" className="active"><span className="material-symbols-outlined">dashboard</span> Dashboard</a>
-        </nav>
-        <div className="header-right">
-          <div className="live-rain-widget">⛈️ <strong>{weather.current_mm_per_hour} mm/h</strong> <span className="live-dot" /> Live</div>
-        </div>
-      </header>
 
       {/* HERO */}
       <section className="dash-hero">
@@ -184,11 +169,6 @@ export default function DashboardPage() {
         )}
       </section>
 
-      {/* FOOTER */}
-      <footer className="dash-footer">
-        <span>CODEX 2026 · SDG 11 · SDG 13</span>
-        <span>Data refreshes every 15 minutes · Synthetic data disclosed</span>
-      </footer>
     </div>
   );
 }

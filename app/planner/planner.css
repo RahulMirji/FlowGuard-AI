@@ -15,8 +15,14 @@
 }
 
 .planner-page {
-  background: var(--bg-main);
-  height: 100vh; display: flex; flex-direction: column; gap: 16px; padding: 16px; overflow: hidden;
+  background: transparent;
+  height: calc(100vh - 200px);
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  overflow: hidden;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
 
