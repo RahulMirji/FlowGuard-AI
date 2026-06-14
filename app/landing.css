@@ -261,6 +261,7 @@ header {
 .m-val { font-size: 13px; font-weight: 700; }
 .m-val.blue { color: var(--brand-blue); }
 .status-alert-tag { color: var(--risk-severe); font-weight: 800; font-size: 15px; }
+.status-normal-tag { color: var(--risk-low); font-weight: 800; font-size: 15px; }
 
 .legend-box {
   position: absolute; right: 16px; top: 190px;
@@ -1170,25 +1171,36 @@ header {
 
 .metrics-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
 .metric-box {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  border-radius: 16px;
-  padding: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(255, 107, 53, 0.08);
+  border-radius: 18px;
+  padding: 26px 20px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.metric-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(255, 107, 53, 0.06);
+  border-color: rgba(255, 107, 53, 0.25);
 }
 
 .mb-value {
-  font-size: 36px;
-  font-weight: 800;
+  font-size: 38px;
+  font-weight: 900;
   color: var(--brand-orange);
   line-height: 1.1;
   margin-bottom: 8px;
+  background: linear-gradient(135deg, #ff7e47, #ff571a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .mb-label {
@@ -1204,7 +1216,7 @@ header {
 .mb-desc {
   font-size: 11px;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .impact-footer-highlights {
@@ -1253,10 +1265,12 @@ header {
   .features-footer-row { grid-template-columns: repeat(2, 1fr); }
   .nav-center { display: none; }
   .hotspots-list-3col { grid-template-columns: repeat(2, 1fr); }
+  .metrics-row { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
   .features-footer-row { grid-template-columns: 1fr; }
   .hero-content h2 { font-size: 36px; }
   .page-footer { flex-direction: column; gap: 8px; text-align: center; }
   .hotspots-list-3col { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: 1fr; }
 }

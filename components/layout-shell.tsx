@@ -33,7 +33,17 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
 
-        <div className="header-actions">
+        <div className="header-actions" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <div className="live-rainfall-widget">
+            <div className="weather-info">
+              <div className="val">{weather.current_mm_per_hour.toFixed(1)} mm/h</div>
+              <div className="label">
+                <span className="dot-live" /> Live Rain
+              </div>
+            </div>
+            <i className="fa-solid fa-cloud-showers-heavy" style={{ color: "var(--brand-blue)", fontSize: "16px" }} />
+          </div>
+
           <div className="user-profile">
             <img src="/profile_rahul.png" alt="Rahul Mirji" className="user-avatar" />
             <span className="user-name">Rahul Mirji</span>
