@@ -52,7 +52,7 @@ header {
 
 .logo-area { display: flex; align-items: center; flex-shrink: 0; }
 .logo-image {
-  height: 88px;
+  height: 70px;
   width: auto;
   object-fit: contain;
   display: block;

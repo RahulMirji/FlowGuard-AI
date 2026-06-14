@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PlannerMap } from "@/components/planner-map";
 import { useWeather } from "@/lib/useWeather";
 import { AnalysisAnimation } from "@/components/analysis-animation";
+import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
 import "./planner.css";
 
 interface RankedRoute {
@@ -21,12 +22,92 @@ interface RankResult {
   summary: string;
 }
 
-export default function PlannerPage() {
+const BENGALURU_LOCATIONS = [
+  "Koramangala, Bengaluru",
+  "Whitefield, Bengaluru",
+  "Silk Board Junction, Bengaluru",
+  "Bellandur ORR, Bengaluru",
+  "Hebbal Flyover, Bengaluru",
+  "Manyata Tech Park, Bengaluru",
+  "Majestic, Bengaluru",
+  "Indiranagar, Bengaluru",
+  "Electronic City, Bengaluru",
+  "HSR Layout, Bengaluru",
+  "Marathahalli, Bengaluru",
+  "Malleswaram, Bengaluru",
+  "Jayanagar, Bengaluru",
+  "MG Road, Bengaluru",
+  "Bannerghatta Road, Bengaluru",
+];
+
+function AutocompleteLoader({ 
+  onServiceLoaded
+}: { 
+  onServiceLoaded: (service: any) => void;
+}) {
+  const placesLibrary = useMapsLibrary("places");
+
+  useEffect(() => {
+    if (!placesLibrary) return;
+    const service = new placesLibrary.AutocompleteService();
+    onServiceLoaded(service);
+  }, [placesLibrary, onServiceLoaded]);
+
+  return null;
+}
+
+function PlannerContent() {
   const [origin, setOrigin] = useState("Koramangala, Bengaluru");
   const [destination, setDestination] = useState("Whitefield, Bengaluru");
+  const [showOriginSug, setShowOriginSug] = useState(false);
+  const [showDestSug, setShowDestSug] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<RankResult | null>(null);
   const weather = useWeather();
+
+  const [originSuggestions, setOriginSuggestions] = useState<string[]>([]);
+  const [destSuggestions, setDestSuggestions] = useState<string[]>([]);
+  const [autocompleteService, setAutocompleteService] = useState<any>(null);
+
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+  const fetchSuggestions = (query: string, type: "origin" | "destination", serviceInstance = autocompleteService) => {
+    if (!query) {
+      if (type === "origin") setOriginSuggestions([]);
+      else setDestSuggestions([]);
+      return;
+    }
+
+    if (serviceInstance) {
+      serviceInstance.getPlacePredictions(
+        {
+          input: query,
+          componentRestrictions: { country: "in" },
+        },
+        (predictions: any, status: any) => {
+          if (status === "OK" && predictions) {
+            const list = predictions.map((p: any) => p.description);
+            if (type === "origin") setOriginSuggestions(list);
+            else setDestSuggestions(list);
+          }
+        }
+      );
+    } else {
+      const filtered = BENGALURU_LOCATIONS.filter(loc =>
+        loc.toLowerCase().includes(query.toLowerCase())
+      );
+      if (type === "origin") setOriginSuggestions(filtered);
+      else setDestSuggestions(filtered);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuggestions(origin, "origin");
+  }, [origin, autocompleteService]);
+
+  useEffect(() => {
+    fetchSuggestions(destination, "destination");
+  }, [destination, autocompleteService]);
 
   const analyze = async () => {
     if (!origin || !destination) return;
@@ -57,29 +138,12 @@ export default function PlannerPage() {
 
   return (
     <div className="planner-page">
+      {apiKey && <AutocompleteLoader onServiceLoaded={setAutocompleteService} />}
       {/* MAIN */}
       <div className="main-container">
         {/* MAP */}
         <div className="map-wrapper">
           <PlannerMap />
-
-          {/* Routing overlay */}
-          <div className="routing-overlay">
-            <div className="search-inputs">
-              <div className="input-box">
-                <span className="dot-icon" style={{ background: "var(--green-success)" }} />
-                <input value={origin} onChange={(e) => setOrigin(e.target.value)} placeholder="Origin" />
-              </div>
-              <span className="material-symbols-outlined swap-icon">swap_horiz</span>
-              <div className="input-box">
-                <span className="dot-icon" style={{ background: "var(--red-danger)" }} />
-                <input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="Destination" />
-              </div>
-            </div>
-            <button className="btn-analyze" onClick={analyze} disabled={loading}>
-              {loading ? "Analyzing..." : "✨ Analyze Route"}
-            </button>
-          </div>
 
           {/* Map sidebar */}
           <div className="map-sidebar">
@@ -109,66 +173,152 @@ export default function PlannerPage() {
 
         {/* RIGHT PANEL */}
         <div className="right-panel">
-          {!result && !loading && (
-            <div className="empty-state">
-              <span className="material-symbols-outlined">route</span>
-              <p>Enter origin & destination, then click <strong>Analyze Route</strong> to get AI-powered safe routing recommendations.</p>
+          {/* Inputs Section */}
+          <div className="route-inputs-card">
+            <div className="route-header-row">
+              <h3>Route Planner</h3>
+              <button className="btn-swap" onClick={() => { setOrigin(destination); setDestination(origin); }} title="Swap routes">
+                <span className="material-symbols-outlined">swap_vert</span>
+              </button>
             </div>
-          )}
-
-          {loading && (
-            <AnalysisAnimation />
-          )}
-
-          {result && (
-            <>
-              {/* AI Recommendation */}
-              <div className="ai-rec-box">
-                <div className="ai-header"><span className="material-symbols-outlined" style={{ fontSize: 14 }}>psychology</span> AI Recommendation</div>
-                <div className="route-title-row">
-                  <div>
-                    <div className="route-name" style={{ color: "#15803d" }}>
-                      Route {getRouteLabel(result.recommended_route_id)}
-                    </div>
-                    <div className="route-meta-sub">{result.summary}</div>
-                  </div>
-                  <div className="route-eta-big" style={{ color: "#15803d" }}>
-                    {Math.round(result.routes.find(r => r.route_id === result.recommended_route_id)?.adjusted_duration_min || 0)} <span>min</span>
-                  </div>
-                </div>
+            
+            <div className="input-field" style={{ position: "relative" }}>
+              <label>Origin</label>
+              <div className="input-box">
+                <span className="dot-icon" style={{ background: "var(--green-success)" }} />
+                <input 
+                  value={origin} 
+                  onChange={(e) => {
+                    setOrigin(e.target.value);
+                    setShowOriginSug(true);
+                  }} 
+                  onFocus={() => setShowOriginSug(true)}
+                  onBlur={() => setTimeout(() => setShowOriginSug(false), 200)}
+                  placeholder="Origin" 
+                />
               </div>
-
-              {/* Route cards */}
-              <div>
-                <div className="all-routes-header">
-                  <span>All Route Options</span>
-                  <span style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: "normal" }}>Sort by: <strong>Recommended</strong></span>
+              {showOriginSug && originSuggestions.length > 0 && (
+                <div className="suggestions-dropdown">
+                  {originSuggestions.map((loc) => (
+                    <div 
+                      key={loc} 
+                      className="suggestion-item"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setOrigin(loc);
+                        setShowOriginSug(false);
+                      }}
+                    >
+                      <span className="material-symbols-outlined suggestion-icon">location_on</span>
+                      <span>{loc}</span>
+                    </div>
+                  ))}
                 </div>
-                {result.routes.sort((a, b) => a.rank - b.rank).map((route) => {
-                  const s = getVerdictStyle(route.verdict);
-                  const label = getRouteLabel(route.route_id);
-                  const isRec = route.route_id === result.recommended_route_id;
-                  return (
-                    <div key={route.route_id} className={`route-card ${isRec ? "selected" : ""}`} style={{ backgroundColor: s.bg, borderColor: s.border }}>
-                      <div className="card-left">
-                        <div className={`letter-badge ${label}`}>{label}</div>
-                        <div>
-                          <span className="card-status-tag" style={{ color: s.color }}>{s.icon} {route.verdict}</span>
-                          <div className="card-time">{Math.round(route.adjusted_duration_min)} <span>min</span></div>
-                          <div className="card-subtext">{route.explanation}</div>
-                          {route.risk_zones_crossed.length > 0 && (
-                            <div className="card-subtext" style={{ color: s.color, fontWeight: 500, marginTop: 4 }}>
-                              {route.risk_zones_crossed.length} risk zone{route.risk_zones_crossed.length > 1 ? "s" : ""} on route
-                            </div>
-                          )}
+              )}
+            </div>
+
+            <div className="input-field" style={{ position: "relative" }}>
+              <label>Destination</label>
+              <div className="input-box">
+                <span className="dot-icon" style={{ background: "var(--red-danger)" }} />
+                <input 
+                  value={destination} 
+                  onChange={(e) => {
+                    setDestination(e.target.value);
+                    setShowDestSug(true);
+                  }} 
+                  onFocus={() => setShowDestSug(true)}
+                  onBlur={() => setTimeout(() => setShowDestSug(false), 200)}
+                  placeholder="Destination" 
+                />
+              </div>
+              {showDestSug && destSuggestions.length > 0 && (
+                <div className="suggestions-dropdown">
+                  {destSuggestions.map((loc) => (
+                    <div 
+                      key={loc} 
+                      className="suggestion-item"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setDestination(loc);
+                        setShowDestSug(false);
+                      }}
+                    >
+                      <span className="material-symbols-outlined suggestion-icon">location_on</span>
+                      <span>{loc}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <button className="btn-analyze-vertical" onClick={analyze} disabled={loading}>
+              {loading ? "Analyzing..." : "✨ Analyze Route"}
+            </button>
+          </div>
+
+          <div className="panel-results-area">
+            {!result && !loading && (
+              <div className="empty-state">
+                <span className="material-symbols-outlined">route</span>
+                <p>Enter origin & destination, then click <strong>Analyze Route</strong> to get AI-powered safe routing recommendations.</p>
+              </div>
+            )}
+
+            {loading && (
+              <AnalysisAnimation />
+            )}
+
+            {result && (
+              <>
+                {/* AI Recommendation */}
+                <div className="ai-rec-box">
+                  <div className="ai-header"><span className="material-symbols-outlined" style={{ fontSize: 14 }}>psychology</span> AI Recommendation</div>
+                  <div className="route-title-row">
+                    <div>
+                      <div className="route-name" style={{ color: "#15803d" }}>
+                        Route {getRouteLabel(result.recommended_route_id)}
+                      </div>
+                      <div className="route-meta-sub">{result.summary}</div>
+                    </div>
+                    <div className="route-eta-big" style={{ color: "#15803d" }}>
+                      {Math.round(result.routes.find(r => r.route_id === result.recommended_route_id)?.adjusted_duration_min || 0)} <span>min</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Route cards */}
+                <div>
+                  <div className="all-routes-header">
+                    <span>All Route Options</span>
+                    <span style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: "normal" }}>Sort by: <strong>Recommended</strong></span>
+                  </div>
+                  {result.routes.sort((a, b) => a.rank - b.rank).map((route) => {
+                    const s = getVerdictStyle(route.verdict);
+                    const label = getRouteLabel(route.route_id);
+                    const isRec = route.route_id === result.recommended_route_id;
+                    return (
+                      <div key={route.route_id} className={`route-card ${isRec ? "selected" : ""}`} style={{ backgroundColor: s.bg, borderColor: s.border }}>
+                        <div className="card-left">
+                          <div className={`letter-badge ${label}`}>{label}</div>
+                          <div>
+                            <span className="card-status-tag" style={{ color: s.color }}>{s.icon} {route.verdict}</span>
+                            <div className="card-time">{Math.round(route.adjusted_duration_min)} <span>min</span></div>
+                            <div className="card-subtext">{route.explanation}</div>
+                            {route.risk_zones_crossed.length > 0 && (
+                              <div className="card-subtext" style={{ color: s.color, fontWeight: 500, marginTop: 4 }}>
+                                {route.risk_zones_crossed.length} risk zone{route.risk_zones_crossed.length > 1 ? "s" : ""} on route
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
@@ -186,5 +336,19 @@ export default function PlannerPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PlannerPage() {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+  if (!apiKey) {
+    return <PlannerContent />;
+  }
+
+  return (
+    <APIProvider apiKey={apiKey} libraries={["places"]}>
+      <PlannerContent />
+    </APIProvider>
   );
 }

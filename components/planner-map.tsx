@@ -1,5 +1,5 @@
 "use client";
-import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+import { Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 const CENTER = { lat: 12.9516, lng: 77.6474 };
 const zones = [
@@ -16,17 +16,15 @@ export function PlannerMap() {
   const k = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   if (!k) return <div className="map-fallback-msg">Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</div>;
   return (
-    <APIProvider apiKey={k}>
-      <Map defaultCenter={CENTER} defaultZoom={12} mapId="planner" defaultTilt={45} gestureHandling="cooperative" disableDefaultUI style={{ width: "100%", height: "100%" }}>
-        {zones.map((z) => (
-          <AdvancedMarker key={z.id} position={{ lat: z.lat, lng: z.lng }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ width: 44, height: 44, borderRadius: "50%", background: colors[z.level], color: "#fff", fontWeight: 700, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 0 0 8px ${shadows[z.level]}, 0 4px 8px rgba(0,0,0,0.2)` }}>{z.score}</div>
-              <div style={{ background: "#fff", padding: "2px 6px", borderRadius: 4, fontSize: 9, fontWeight: 700, marginTop: 4, boxShadow: "0 2px 4px rgba(0,0,0,0.1)", textTransform: "uppercase" as const }}>{z.name}</div>
-            </div>
-          </AdvancedMarker>
-        ))}
-      </Map>
-    </APIProvider>
+    <Map defaultCenter={CENTER} defaultZoom={12} mapId="planner" defaultTilt={45} gestureHandling="cooperative" disableDefaultUI style={{ width: "100%", height: "100%" }}>
+      {zones.map((z) => (
+        <AdvancedMarker key={z.id} position={{ lat: z.lat, lng: z.lng }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ width: 44, height: 44, borderRadius: "50%", background: colors[z.level], color: "#fff", fontWeight: 700, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 0 0 8px ${shadows[z.level]}, 0 4px 8px rgba(0,0,0,0.2)` }}>{z.score}</div>
+            <div style={{ background: "#fff", padding: "2px 6px", borderRadius: 4, fontSize: 9, fontWeight: 700, marginTop: 4, boxShadow: "0 2px 4px rgba(0,0,0,0.1)", textTransform: "uppercase" as const }}>{z.name}</div>
+          </div>
+        </AdvancedMarker>
+      ))}
+    </Map>
   );
 }
