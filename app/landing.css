@@ -52,7 +52,7 @@ header {
 
 .logo-area { display: flex; align-items: center; flex-shrink: 0; }
 .logo-image {
-  height: 70px;
+  height: 63px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -753,7 +753,7 @@ header {
 /* Architecture Section */
 .architecture-layout {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
+  grid-template-columns: 1fr;
   gap: 24px;
 }
 
