@@ -106,17 +106,17 @@
 
 | # | Task | Owner | Status |
 |---|------|-------|--------|
-| 6.1 | Implement Edge Function `generate-infra-report` (Gemini prompt 5.4) | | ⬜ |
-| 6.2 | Generate reports for all High/Severe zones, cache in `infra_reports` | | ⬜ |
-| 6.3 | Deploy Edge Function | | ⬜ |
-| 6.4 | Create `app/api/infra-reports/route.ts` (proxy) | | ⬜ |
-| 6.5 | Build `components/RiskZoneTable.tsx` — sortable table with priority | | ⬜ |
-| 6.6 | Build risk distribution bar chart (Recharts) | | ⬜ |
-| 6.7 | Build rainfall vs delay line chart (Recharts) | | ⬜ |
-| 6.8 | Build `app/dashboard/page.tsx` — KPI cards + charts + table | | ⬜ |
+| 6.1 | Implement Edge Function `generate-infra-report` (Gemini prompt 5.4) | | ✅ |
+| 6.2 | Generate reports for all High/Severe zones, cache in `infra_reports` | | ✅ |
+| 6.3 | Deploy Edge Function | | ✅ |
+| 6.4 | Create `app/api/infra-reports/route.ts` (proxy) | | ✅ |
+| 6.5 | Build `components/RiskZoneTable.tsx` — sortable table with priority | | ✅ |
+| 6.6 | Build risk distribution bar chart (Recharts) | | ✅ |
+| 6.7 | Build rainfall vs delay line chart (Recharts) | | ✅ |
+| 6.8 | Build `app/dashboard/page.tsx` — KPI cards + charts + table | | ✅ |
 | 6.9 | Verify: Dashboard displays all 4 KPIs, charts render, table sorts | | ⬜ |
 
-**Phase 6 exit criteria:** Dashboard fully functional with live data, all 4 KPIs displayed.
+**Phase 6 exit criteria:** ✅ Dashboard fully functional with live data, all 4 KPIs displayed.
 
 ---
 
