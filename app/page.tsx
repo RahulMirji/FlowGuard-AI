@@ -17,14 +17,6 @@ export default function LandingPage() {
             <Link href="/planner" className="btn-orange" style={{ padding: "14px 28px" }}><i className="fa-solid fa-arrow-right" /> Plan a Route</Link>
             <Link href="/dashboard" className="btn-secondary">View City Dashboard <i className="fa-solid fa-chart-simple" style={{ color: "var(--brand-blue)" }} /></Link>
           </div>
-          <div className="brand-attribution">
-            <span>Powered by</span>
-            <span className="engine-name"><i className="fa-solid fa-sparkles" style={{ color: "#2563eb" }} /> Gemini</span>
-            <span className="engine-name"><i className="fa-solid fa-map" style={{ color: "#4285F4" }} /> Google Maps 3D</span>
-            <span className="engine-name"><i className="fa-solid fa-route" style={{ color: "#000" }} /> Mapbox Directions</span>
-            <span className="engine-name"><i className="fa-solid fa-cloud" style={{ color: "#ea580c" }} /> OpenWeather</span>
-            <span className="engine-name"><i className="fa-solid fa-bolt" style={{ color: "#10b981" }} /> Supabase</span>
-          </div>
         </div>
 
         {/* MAP */}
@@ -268,52 +260,6 @@ export default function LandingPage() {
         </div>
 
         <div className="architecture-layout">
-          {/* FLOW WORKFLOW */}
-          <div className="workflow-diagram">
-            <h3>Workflow & Data Pipelines</h3>
-            <div className="flow-steps-grid">
-              <div className="flow-box">
-                <span className="fb-tag">01. Ingestion</span>
-                <div className="fb-icon"><i className="fa-solid fa-cloud-arrow-down" /></div>
-                <h4>Context Aggregation</h4>
-                <ul>
-                  <li>OpenWeather API (Live rain)</li>
-                  <li>Historical Flood Dataset</li>
-                  <li>Mapbox Directions API</li>
-                  <li>User Commute Destination</li>
-                </ul>
-              </div>
-              <div className="flow-arrow"><i className="fa-solid fa-arrow-right" /></div>
-              <div className="flow-box active-flow">
-                <span className="fb-tag">02. AI Reasoning</span>
-                <div className="fb-icon"><i className="fa-solid fa-brain" /></div>
-                <h4>Gemini AI Engine</h4>
-                <ul>
-                  <li>Active Risk Assessment</li>
-                  <li>Dynamic Route Ranking</li>
-                  <li>Natural Language Reasoning</li>
-                  <li>Infrastructure Advisory</li>
-                </ul>
-              </div>
-              <div className="flow-arrow"><i className="fa-solid fa-arrow-right" /></div>
-              <div className="flow-box">
-                <span className="fb-tag">03. Outputs</span>
-                <div className="fb-icon"><i className="fa-solid fa-desktop" /></div>
-                <h4>Decision Support</h4>
-                <ul>
-                  <li>Best Commute Route</li>
-                  <li>Proactive Safety Tips</li>
-                  <li>Govt Action Alerts</li>
-                  <li>City Analytics Dashboard</li>
-                </ul>
-              </div>
-            </div>
-            <div className="feedback-loop-bar">
-              <i className="fa-solid fa-rotate-left" style={{ color: "var(--brand-orange)" }} />
-              <span><strong>Feedback Loop & Continuous Learning:</strong> User feedback logs are stored in PostgreSQL for continuous model prompt refinement.</span>
-            </div>
-          </div>
-
           {/* TECH STACK GRID */}
           <div className="tech-stack-container">
             <h3>Engineering Technology Stack</h3>
