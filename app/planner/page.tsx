@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { PlannerMap } from "@/components/planner-map";
 import { useWeather } from "@/lib/useWeather";
-import AgentPlan from "@/components/ui/agent-plan";
+import { AnalysisAnimation } from "@/components/analysis-animation";
 import "./planner.css";
 
 interface RankedRoute {
@@ -27,62 +27,6 @@ export default function PlannerPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<RankResult | null>(null);
   const weather = useWeather();
-
-  const analysisTasks = [
-    {
-      id: "1", title: "Weather Intelligence", description: "Monitoring rainfall forecasts, storm activity, and environmental conditions",
-      status: "in-progress", priority: "high", level: 0, dependencies: [],
-      subtasks: [
-        { id: "1.1", title: "Fetching live rainfall data from OpenWeatherMap...", description: "Current: 18.5 mm/h detected in Bengaluru region", status: "completed", priority: "high", tools: ["OpenWeather API"] },
-        { id: "1.2", title: "Analyzing 3-hour precipitation forecast...", description: "32mm expected — heavy rain warning active", status: "completed", priority: "high", tools: ["Forecast Model"] },
-        { id: "1.3", title: "Checking storm cell movement patterns...", description: "Storm moving SE towards Bellandur-Sarjapur corridor", status: "in-progress", priority: "medium", tools: ["Weather Radar"] },
-      ],
-    },
-    {
-      id: "2", title: "Traffic & Route Intelligence", description: "Evaluating traffic patterns, route availability, and road accessibility",
-      status: "in-progress", priority: "high", level: 0, dependencies: [],
-      subtasks: [
-        { id: "2.1", title: "Pulling 3 route alternatives via Google Maps...", description: "Route A (via Silk Board), Route B (via ORR North), Route C (via Bellandur)", status: "completed", priority: "high", tools: ["Google Directions API"] },
-        { id: "2.2", title: "Checking real-time traffic congestion levels...", description: "Silk Board junction showing 2.5x normal congestion", status: "in-progress", priority: "high", tools: ["Traffic API"] },
-        { id: "2.3", title: "Verifying road closure reports...", description: "No closures reported on candidate routes", status: "completed", priority: "medium", tools: ["BBMP Alerts"] },
-      ],
-    },
-    {
-      id: "3", title: "Infrastructure Assessment", description: "Analyzing drainage systems, pumping stations, and water management infrastructure",
-      status: "in-progress", priority: "high", level: 0, dependencies: [],
-      subtasks: [
-        { id: "3.1", title: "Checking Silk Board underpass pump status...", description: "⚠️ Pump capacity exceeded — waterlogging confirmed", status: "completed", priority: "high", tools: ["Supabase DB"] },
-        { id: "3.2", title: "Evaluating Bellandur lake drain capacity...", description: "Raja kaluve blocked — overflow risk HIGH", status: "completed", priority: "high", tools: ["Infrastructure DB"] },
-        { id: "3.3", title: "Scanning stormwater drain status on ORR...", description: "Northern stretch drains operational at 70% capacity", status: "in-progress", priority: "medium", tools: ["BBMP Data"] },
-      ],
-    },
-    {
-      id: "4", title: "Historical Flood Analysis", description: "Reviewing historical flood records and identifying high-risk zones",
-      status: "in-progress", priority: "medium", level: 0, dependencies: [],
-      subtasks: [
-        { id: "4.1", title: "Loading 15 chronic waterlogging hotspots...", description: "Silk Board (8 incidents/season), Bellandur (7), KR Puram (6)", status: "completed", priority: "high", tools: ["Supabase DB"] },
-        { id: "4.2", title: "Cross-referencing with current rainfall intensity...", description: "5 zones now exceed historical flood-trigger threshold", status: "in-progress", priority: "high", tools: ["Risk Engine"] },
-      ],
-    },
-    {
-      id: "5", title: "Risk Prediction Engine", description: "Predicting flood impact, waterlogging probability, and route safety scores",
-      status: "pending", priority: "high", level: 1, dependencies: ["1", "2", "3", "4"],
-      subtasks: [
-        { id: "5.1", title: "Computing flood risk scores for each zone...", description: "Applying rainfall × drainage × history model", status: "pending", priority: "high", tools: ["Gemini 2.5 Flash"] },
-        { id: "5.2", title: "Running proximity analysis on route polylines...", description: "Checking 500m buffer against high-risk zone coordinates", status: "pending", priority: "high", tools: ["Haversine Engine"] },
-        { id: "5.3", title: "Calculating adjusted ETAs with flood delays...", description: "Applying congestion multipliers: Severe +60%, High +35%", status: "pending", priority: "high", tools: ["Gemini 2.5 Flash"] },
-      ],
-    },
-    {
-      id: "6", title: "Smart Route Recommendation", description: "Delivering the safest route, backup alternatives, and actionable guidance",
-      status: "pending", priority: "high", level: 1, dependencies: ["5"],
-      subtasks: [
-        { id: "6.1", title: "Ranking routes by safety score...", description: "Weighing flood risk, traffic, and travel time", status: "pending", priority: "high", tools: ["Gemini 2.5 Flash"] },
-        { id: "6.2", title: "Generating natural language explanations...", description: "Creating commuter-friendly reasoning for each route", status: "pending", priority: "medium", tools: ["Gemini 2.5 Flash"] },
-        { id: "6.3", title: "Logging results for KPI tracking...", description: "Storing baseline vs recommended duration for accuracy metrics", status: "pending", priority: "low", tools: ["Supabase DB"] },
-      ],
-    },
-  ];
 
   const analyze = async () => {
     if (!origin || !destination) return;
@@ -189,12 +133,7 @@ export default function PlannerPage() {
           )}
 
           {loading && (
-            <div className="analysis-plan-wrapper">
-              <div className="analysis-plan-header">
-                <i className="fa-solid fa-brain" /> AI Analysis in Progress
-              </div>
-              <AgentPlan tasks={analysisTasks} />
-            </div>
+            <AnalysisAnimation />
           )}
 
           {result && (
