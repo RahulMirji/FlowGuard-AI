@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const MODEL = "gemini-3.5-flash";
+const MODEL = "gemini-3.1-flash-lite";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 
