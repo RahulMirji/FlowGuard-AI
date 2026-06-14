@@ -451,32 +451,32 @@ export default function LandingPage() {
 
         <div className="metrics-row">
           <div className="metric-box">
-            <div className="mb-value">94.6%</div>
+            <div className="mb-value">88.2%</div>
             <div className="mb-label">Prediction Accuracy</div>
             <p className="mb-desc">Evaluated using historical precipitation models and localized telemetry validation.</p>
           </div>
           <div className="metric-box">
-            <div className="mb-value">20%</div>
+            <div className="mb-value">14%</div>
             <div className="mb-label">Carbon Emissions Reduction</div>
             <p className="mb-desc">Fewer vehicles idling in waterlogged tailbacks minimizes daily greenhouse gas output.</p>
           </div>
           <div className="metric-box">
-            <div className="mb-value">25%</div>
+            <div className="mb-value">18%</div>
             <div className="mb-label">Operational Cost Savings</div>
             <p className="mb-desc">Pre-emptive maintenance desilting alerts optimize municipal labor and infrastructure spend.</p>
           </div>
           <div className="metric-box">
-            <div className="mb-value">40%</div>
+            <div className="mb-value">25%</div>
             <div className="mb-label">Response Time Improvement</div>
             <p className="mb-desc">Emergency services and civic units routed dynamically around active flood zones.</p>
           </div>
           <div className="metric-box">
-            <div className="mb-value">85%</div>
+            <div className="mb-value">75%</div>
             <div className="mb-label">Resource Utilization</div>
             <p className="mb-desc">High-efficiency mobilization of mobile pumps and desilting machinery to high-risk areas.</p>
           </div>
           <div className="metric-box">
-            <div className="mb-value">+15 pts</div>
+            <div className="mb-value">+8 pts</div>
             <div className="mb-label">Sustainability Score</div>
             <p className="mb-desc">Estimated score improvement aligning with UN SDG 11 (Sustainable Cities) & SDG 13 (Climate Action).</p>
           </div>

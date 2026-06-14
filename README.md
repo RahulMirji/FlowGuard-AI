@@ -29,12 +29,12 @@ During heavy monsoon spells, Bengaluru's critical traffic corridors transform in
 
 | Metric | Target Outcome | Evaluation Focus |
 | :--- | :--- | :--- |
-| **Prediction Accuracy** | **94.6%** | High-precision rainfall & historic risk analysis |
-| **Carbon Emissions** | **-20%** | Minimizes engine idling in flooded bottleneck zones |
-| **Operational Costs** | **-25%** | Pre-emptive desilting avoids emergency maintenance fees |
-| **Response Time** | **+40%** | Routes emergency services around congested waterlogged lanes |
-| **Resource Utilization** | **85%** | Maximizes desilting machinery & mobile pump coordination |
-| **Sustainability Score** | **+15 pts** | Directly advances UN SDG 11 & SDG 13 alignment |
+| **Prediction Accuracy** | **88.2%** | High-precision rainfall & historic risk analysis |
+| **Carbon Emissions** | **-14%** | Minimizes engine idling in flooded bottleneck zones |
+| **Operational Costs** | **-18%** | Pre-emptive desilting avoids emergency maintenance fees |
+| **Response Time** | **+25%** | Routes emergency services around congested waterlogged lanes |
+| **Resource Utilization** | **75%** | Maximizes desilting machinery & mobile pump coordination |
+| **Sustainability Score** | **+8 pts** | Directly advances UN SDG 11 & SDG 13 alignment |
 
 ---
 

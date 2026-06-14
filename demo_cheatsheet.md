@@ -26,15 +26,15 @@ Use this quick-reference sheet during your live pitch to stay aligned with the s
 
 ## 📈 2. Core Projections & Metrics (The 6 Pillars)
 
-*   **94.6% — Flood Prediction Accuracy:**
+*   **88.2% — Flood Prediction Accuracy:**
     *   Calculated using historical rainfall databases cross-referenced with live precipitation telemetry.
-*   **20% — Carbon Emissions Reduction:**
+*   **14% — Carbon Emissions Reduction:**
     *   Obtained by routing cars and commuters around active waterlogged areas, directly reducing traffic gridlock and engine idling.
-*   **25% — Operational Cost Savings:**
+*   **18% — Operational Cost Savings:**
     *   Pre-emptive cleaning alerts identify clogged drains *before* flooding events occur, reducing emergency maintenance overheads.
-*   **40% — Response Time Improvement:**
+*   **25% — Response Time Improvement:**
     *   Enables ambulance and emergency crews to bypass bottleneck hotspots using dynamic risk-averse routing.
-*   **85% — Resource Utilization Efficiency:**
+*   **75% — Resource Utilization Efficiency:**
     *   Municipal desilting teams and mobile water pump units are deployed straight to AI-targeted severe-risk coordinates.
-*   **+15 pts — Sustainability Score (UN SDGs):**
+*   **+8 pts — Sustainability Score (UN SDGs):**
     *   Aligns city transport systems with UN SDG 11 (Sustainable Cities & Communities) and SDG 13 (Climate Action).
