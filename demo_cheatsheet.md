@@ -36,5 +36,5 @@ Use this quick-reference sheet during your live pitch to stay aligned with the s
     *   Enables ambulance and emergency crews to bypass bottleneck hotspots using dynamic risk-averse routing.
 *   **75% — Resource Utilization Efficiency:**
     *   Municipal desilting teams and mobile water pump units are deployed straight to AI-targeted severe-risk coordinates.
-*   **+8 pts — Sustainability Score (UN SDGs):**
+*   **+8% — Sustainability Score (UN SDGs):**
     *   Aligns city transport systems with UN SDG 11 (Sustainable Cities & Communities) and SDG 13 (Climate Action).

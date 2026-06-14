@@ -476,7 +476,7 @@ export default function LandingPage() {
             <p className="mb-desc">High-efficiency mobilization of mobile pumps and desilting machinery to high-risk areas.</p>
           </div>
           <div className="metric-box">
-            <div className="mb-value">+8 pts</div>
+            <div className="mb-value">+8%</div>
             <div className="mb-label">Sustainability Score</div>
             <p className="mb-desc">Estimated score improvement aligning with UN SDG 11 (Sustainable Cities) & SDG 13 (Climate Action).</p>
           </div>

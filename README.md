@@ -34,7 +34,7 @@ During heavy monsoon spells, Bengaluru's critical traffic corridors transform in
 | **Operational Costs** | **-18%** | Pre-emptive desilting avoids emergency maintenance fees |
 | **Response Time** | **+25%** | Routes emergency services around congested waterlogged lanes |
 | **Resource Utilization** | **75%** | Maximizes desilting machinery & mobile pump coordination |
-| **Sustainability Score** | **+8 pts** | Directly advances UN SDG 11 & SDG 13 alignment |
+| **Sustainability Score** | **+8%** | Directly advances UN SDG 11 & SDG 13 alignment |
 
 ---
 
